@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fee Statistics | National University of Modern Languages</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hci-inspector.css">
+  <style>
+    /* 3-copy Challan Printable Slip Styles */
+    .challan-slip-preview {
+      background: white;
+      color: black;
+      padding: 1.5rem;
+      border: 2px dashed #94a3b8;
+      border-radius: var(--radius-md);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .challan-columns {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      border-top: 1px solid #ccc;
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+    .challan-col {
+      border-right: 1px dashed #ccc;
+      padding-right: 0.75rem;
+    }
+    .challan-col:last-child {
+      border-right: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Global Header (HCI: Consistency & Standards H4) -->
+  <header class="portal-header" data-heuristic="H4" data-heuristic-label="H4: Consistent Header Across All Pages">
+    <div class="header-inner">
+      <a href="dashboard.html" class="brand-wrapper">
+        <div class="numl-crest">NUML</div>
+        <div class="brand-text">
+          <h1>National University of Modern Languages</h1>
+          <p>Student Academic Portal • Islamabad</p>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="portal-nav" aria-label="Portal main navigation">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="fee-stats.html" class="nav-link active">
+          <span>💳</span> Fee Stats
+        </a>
+        <a href="transcript.html" class="nav-link">
+          <span>📜</span> Transcript
+        </a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <div class="user-profile-badge">
+          <div class="user-avatar">H</div>
+          <div class="user-details">
+            <div class="user-name dynamic-student-name">Hanzla Khan</div>
+            <div class="user-id dynamic-student-roll">21-BSCS-042</div>
+          </div>
+        </div>
+
+        <button class="icon-btn btn-logout" aria-label="Sign Out" title="Sign Out of Portal">
+          <span>🚪</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Breadcrumbs (HCI: Recognition Rather Than Recall H6) -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb" data-heuristic="H6" data-heuristic-label="H6: Recognition via Breadcrumbs">
+      <a href="dashboard.html">Portal</a>
+      <span class="divider">/</span>
+      <a href="dashboard.html">Dashboard</a>
+      <span class="divider">/</span>
+      <span class="current">Fee Statistics & Challans</span>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div>
+        <h2 class="page-title">Fee Statistics & Billing Records</h2>
+        <p class="page-subtitle">
+          Manage university tuition, computer science lab fees, online payments, and download official challan vouchers.
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn btn-outline" id="print-all-challans-btn">
+          <span>🖨️</span> Print Financial Statement
+        </button>
+        <button class="btn btn-primary" id="open-new-challan-btn">
+          <span>💳</span> Pay / Simulate Next Challan
+        </button>
+      </div>
+    </section>
+
+    <!-- Financial KPI Summary Cards (HCI: Visibility of System Status H1) -->
+    <section class="stats-grid">
+      <!-- Total Billed -->
+      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Financial System Status">
+        <div class="stat-info">
+          <p class="stat-label">Total Billed to Date</p>
+          <h3 class="stat-value">PKR 412,000</h3>
+          <span class="stat-desc">Semesters 1 through 7</span>
+        </div>
+        <div class="stat-icon primary">📊</div>
+      </div>
+
+      <!-- Total Paid -->
+      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Verified Payment Status">
+        <div class="stat-info">
+          <p class="stat-label">Total Verified Payments</p>
+          <h3 class="stat-value" style="color: var(--secondary);">PKR 412,000</h3>
+          <span class="stat-desc">100% of assessed dues cleared</span>
+        </div>
+        <div class="stat-icon secondary">✅</div>
+      </div>
+
+      <!-- Current Balance -->
+      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Outstanding Dues Status">
+        <div class="stat-info">
+          <p class="stat-label">Current Outstanding</p>
+          <h3 class="stat-value" id="outstanding-balance-display" style="color: var(--success);">PKR 0</h3>
+          <span class="stat-desc" id="outstanding-balance-desc">No overdue fines or liabilities</span>
+        </div>
+        <div class="stat-icon secondary" id="outstanding-icon">💰</div>
+      </div>
+
+      <!-- Next Due Date -->
+      <div class="stat-card" data-heuristic="H10" data-heuristic-label="H10: Upcoming Financial Deadlines">
+        <div class="stat-info">
+          <p class="stat-label">Next Anticipated Billing</p>
+          <h3 class="stat-value" style="font-size: 1.45rem;">Jan 15, 2027</h3>
+          <span class="stat-desc">8th Semester Final Project & Tuition</span>
+        </div>
+        <div class="stat-icon warning">📅</div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Controls (HCI: Flexibility & Efficiency H7) -->
+    <section class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.5rem;" data-heuristic="H7" data-heuristic-label="H7: Flexibility & Instant Filters">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+          <div>
+            <label for="filter-semester" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+              Filter Semester
+            </label>
+            <select id="filter-semester" class="form-control" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+              <option value="all">All Semesters (1 to 7)</option>
+              <option value="Fall 2026">Fall 2026 (7th Semester - Current)</option>
+              <option value="Spring 2026">Spring 2026 (6th Semester)</option>
+              <option value="Fall 2025">Fall 2025 (5th Semester)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="filter-status" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+              Payment Status
+            </label>
+            <select id="filter-status" class="form-control" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+              <option value="all">All Statuses</option>
+              <option value="Paid">Paid</option>
+              <option value="Pending">Pending / Unpaid</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <button class="btn btn-sm btn-outline" id="reset-filters-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Reset">
+            🔄 Reset Filters
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Fee Challans Table (HCI: Real World Match H2 + Error Prevention H5) -->
+    <section class="card" data-heuristic="H2" data-heuristic-label="H2: Pakistani University Challan Terminology">
+      <div class="card-header">
+        <h3 class="card-title">
+          <span>📜</span> Semester Fee Challans & Receipts
+        </h3>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">
+          Official Bank Challans (1Link Kuickpay Consumer ID: <strong style="color:var(--text-main);">9100-21042</strong>)
+        </span>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table" id="challans-table">
+          <thead>
+            <tr>
+              <th>Challan ID</th>
+              <th>Semester</th>
+              <th>Fee Breakdown</th>
+              <th>Due Date</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="challans-tbody">
+            <!-- Row 1: Fall 2026 (7th Sem) -->
+            <tr data-semester="Fall 2026" data-status="Paid" id="row-challan-7">
+              <td>
+                <span style="font-family: var(--font-mono); font-weight: 700;">NUM-26F-7042</span>
+              </td>
+              <td>
+                <strong>7th Semester (Fall 2026)</strong><br>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">BS Computer Science</span>
+              </td>
+              <td style="font-size: 0.8rem;">
+                • Tuition Fee: PKR 45,000<br>
+                • CS-413 Graphics & HCI Lab: PKR 7,500<br>
+                • Midterm Exam Fee: PKR 4,000<br>
+                • Library Fund: PKR 2,000
+              </td>
+              <td>Aug 25, 2026</td>
+              <td>
+                <strong style="font-size: 0.95rem; color: var(--text-main);">PKR 58,500</strong>
+              </td>
+              <td>
+                <span class="badge badge-success status-pill">✓ Paid</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-26F-7042" data-sem="7th Semester" data-amount="58,500" data-status="Paid">
+                  📄 Receipt
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 2: Spring 2026 (6th Sem) -->
+            <tr data-semester="Spring 2026" data-status="Paid" id="row-challan-6">
+              <td>
+                <span style="font-family: var(--font-mono); font-weight: 700;">NUM-26S-6042</span>
+              </td>
+              <td>
+                <strong>6th Semester (Spring 2026)</strong><br>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">BS Computer Science</span>
+              </td>
+              <td style="font-size: 0.8rem;">
+                • Tuition Fee: PKR 45,000<br>
+                • Web Engineering Lab: PKR 7,500<br>
+                • Exam Fee: PKR 4,000<br>
+                • Sports Fund: PKR 1,500
+              </td>
+              <td>Feb 10, 2026</td>
+              <td>
+                <strong style="font-size: 0.95rem; color: var(--text-main);">PKR 58,000</strong>
+              </td>
+              <td>
+                <span class="badge badge-success status-pill">✓ Paid</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-26S-6042" data-sem="6th Semester" data-amount="58,000" data-status="Paid">
+                  📄 Receipt
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 3: Fall 2025 (5th Sem) -->
+            <tr data-semester="Fall 2025" data-status="Paid" id="row-challan-5">
+              <td>
+                <span style="font-family: var(--font-mono); font-weight: 700;">NUM-25F-5042</span>
+              </td>
+              <td>
+                <strong>5th Semester (Fall 2025)</strong><br>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">BS Computer Science</span>
+              </td>
+              <td style="font-size: 0.8rem;">
+                • Tuition Fee: PKR 45,000<br>
+                • Database Systems Lab: PKR 7,500<br>
+                • Exam Fee: PKR 4,000
+              </td>
+              <td>Aug 20, 2025</td>
+              <td>
+                <strong style="font-size: 0.95rem; color: var(--text-main);">PKR 56,500</strong>
+              </td>
+              <td>
+                <span class="badge badge-success status-pill">✓ Paid</span>
+              </td>
+              <td style="text-align: right;">
+                <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-25F-5042" data-sem="5th Semester" data-amount="56,500" data-status="Paid">
+                  📄 Receipt
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- HCI Explanatory Box -->
+    <div style="margin-top: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;" data-heuristic="H5" data-heuristic-label="H5: Error Prevention & Undo Freedom">
+      <div style="display: flex; gap: 0.85rem; align-items: flex-start;">
+        <div style="font-size: 1.5rem;">🛡️</div>
+        <div>
+          <strong style="font-size: 0.92rem; color: var(--text-main);">HCI Error Prevention & Reversibility Mechanism</strong>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
+            To prevent catastrophic transaction errors (Heuristic 5), fee payments require explicit modal review. Furthermore, complying with Heuristic 3 (User Control & Freedom), any simulated online payment provides an instant <strong>5-second Undo action</strong> before final ledger commitment.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Payment Simulation Modal (HCI: Error Prevention H5 & User Control H3) -->
+  <dialog class="modal" id="payment-modal" data-heuristic="H5" data-heuristic-label="H5: Confirmation Dialog Safeguard">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">💳 Secure Online Fee Payment</h3>
+        <button class="icon-btn" onclick="ModalHelper.close('payment-modal')" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; margin-bottom: 1rem;">
+          You are authorizing online payment for <strong id="modal-challan-id">NUM-27S-8042</strong> (Upcoming 8th Semester Tuition).
+        </p>
+
+        <!-- Breakdown Card -->
+        <div style="background: var(--bg-subtle); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+            <span>8th Semester Tuition Fee:</span>
+            <strong>PKR 45,000</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+            <span>Final Year Project (FYP-2) Lab Charges:</span>
+            <strong>PKR 8,500</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:0.35rem;">
+            <span>Degree & Convocation Fund:</span>
+            <strong>PKR 5,000</strong>
+          </div>
+          <div style="border-top:1px solid var(--border-color); padding-top:0.5rem; margin-top:0.5rem; display:flex; justify-content:space-between; font-weight:800; font-size:1rem; color:var(--primary);">
+            <span>Total Payable:</span>
+            <span>PKR 58,500</span>
+          </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="form-group">
+          <label class="form-label" for="pay-method-select">Select Payment Channel</label>
+          <select id="pay-method-select" class="form-control">
+            <option value="1link">1Link / 1Bill (Kuickpay ID: 9100-21042)</option>
+            <option value="jazzcash">JazzCash / EasyPaisa Mobile Wallet</option>
+            <option value="hbl">HBL Internet Banking Direct Debit</option>
+            <option value="counter">Over-the-Counter Bank Voucher</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="pay-pin">Security PIN / Transaction Password</label>
+          <input type="password" id="pay-pin" class="form-control" placeholder="••••" maxlength="4" value="1234">
+          <span class="form-hint">Enter your 4-digit bank or wallet authorization PIN</span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="ModalHelper.close('payment-modal')">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirm-payment-btn">
+          Authorize PKR 58,500 Payment
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Official Challan Slip Modal (Print Preview) -->
+  <dialog class="modal" id="slip-modal" style="max-width: 780px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">📄 Official Fee Challan Voucher</h3>
+        <button class="icon-btn" onclick="ModalHelper.close('slip-modal')" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="challan-slip-preview" id="printable-challan">
+          <div style="text-align: center; margin-bottom: 0.5rem;">
+            <h2 style="font-size: 1.1rem; font-weight: 800; color: #002855;">NATIONAL UNIVERSITY OF MODERN LANGUAGES</h2>
+            <p style="font-size: 0.72rem; color: #475569;">Sector H-9, Islamabad • Fee Collection Account: HBL NUML Branch 0042-790124</p>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-top: 0.5rem;">
+            <div>
+              <strong>Student:</strong> Hanzla Khan (<span class="dynamic-student-roll">21-BSCS-042</span>)<br>
+              <strong>Program:</strong> BS Computer Science (7th Semester)
+            </div>
+            <div style="text-align: right;">
+              <strong>Challan ID:</strong> <span id="slip-challan-id">NUM-26F-7042</span><br>
+              <strong>Date:</strong> 21-Sep-2026 • <strong>Status:</strong> <span id="slip-challan-status" style="color: green; font-weight: 700;">PAID</span>
+            </div>
+          </div>
+
+          <!-- 3 Columns for Pakistani Bank Challans -->
+          <div class="challan-columns">
+            <div class="challan-col">
+              <div style="text-align: center; font-weight: 700; margin-bottom: 0.5rem; text-decoration: underline;">
+                BANK COPY
+              </div>
+              <p>Tuition: PKR 45,000</p>
+              <p>Graphics Lab: PKR 7,500</p>
+              <p>Exam Fee: PKR 4,000</p>
+              <p>Library: PKR 2,000</p>
+              <hr style="margin: 0.4rem 0;">
+              <strong>Total: PKR <span class="slip-amount-val">58,500</span></strong>
+              <div style="margin-top: 1.5rem; font-size: 0.68rem; color: #64748b;">Bank Cashier Stamp / Sign</div>
+            </div>
+
+            <div class="challan-col">
+              <div style="text-align: center; font-weight: 700; margin-bottom: 0.5rem; text-decoration: underline;">
+                UNIVERSITY COPY
+              </div>
+              <p>Tuition: PKR 45,000</p>
+              <p>Graphics Lab: PKR 7,500</p>
+              <p>Exam Fee: PKR 4,000</p>
+              <p>Library: PKR 2,000</p>
+              <hr style="margin: 0.4rem 0;">
+              <strong>Total: PKR <span class="slip-amount-val">58,500</span></strong>
+              <div style="margin-top: 1.5rem; font-size: 0.68rem; color: #64748b;">Accounts Officer Sign</div>
+            </div>
+
+            <div class="challan-col">
+              <div style="text-align: center; font-weight: 700; margin-bottom: 0.5rem; text-decoration: underline;">
+                STUDENT COPY
+              </div>
+              <p>Tuition: PKR 45,000</p>
+              <p>Graphics Lab: PKR 7,500</p>
+              <p>Exam Fee: PKR 4,000</p>
+              <p>Library: PKR 2,000</p>
+              <hr style="margin: 0.4rem 0;">
+              <strong>Total: PKR <span class="slip-amount-val">58,500</span></strong>
+              <div style="margin-top: 1.5rem; font-size: 0.68rem; color: #64748b;">Retain for Record</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="ModalHelper.close('slip-modal')">Close</button>
+        <button type="button" class="btn btn-primary" onclick="window.print()">
+          🖨️ Print Voucher
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Global Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>National University of Modern Languages (NUML)</strong> • H-9, Islamabad, Pakistan
+      </div>
+      <div>
+        Subject: Human-Computer Interaction & Computer Graphics • Lab Project
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/hci-inspector.js"></script>
+
+  <script>
+    // Fee Stats Interactive Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterSemester = document.getElementById('filter-semester');
+      const filterStatus = document.getElementById('filter-status');
+      const resetBtn = document.getElementById('reset-filters-btn');
+      const tableRows = document.querySelectorAll('#challans-tbody tr');
+
+      // Filter handling
+      function applyFilters() {
+        const semVal = filterSemester.value;
+        const statusVal = filterStatus.value;
+
+        tableRows.forEach(row => {
+          const rowSem = row.getAttribute('data-semester');
+          const rowStatus = row.getAttribute('data-status');
+
+          const semMatches = (semVal === 'all' || rowSem === semVal);
+          const statusMatches = (statusVal === 'all' || rowStatus === statusVal);
+
+          row.style.display = (semMatches && statusMatches) ? '' : 'none';
+        });
+      }
+
+      filterSemester.addEventListener('change', applyFilters);
+      filterStatus.addEventListener('change', applyFilters);
+
+      resetBtn.addEventListener('click', () => {
+        filterSemester.value = 'all';
+        filterStatus.value = 'all';
+        applyFilters();
+        ToastManager.show({
+          title: 'Filters Reset',
+          message: 'Showing all semester fee challans.',
+          type: 'info'
+        });
+      });
+
+      // View Slip Modal Handler
+      const viewSlipBtns = document.querySelectorAll('.view-slip-btn');
+      viewSlipBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const challanId = btn.getAttribute('data-challan');
+          const amount = btn.getAttribute('data-amount');
+          const status = btn.getAttribute('data-status');
+
+          document.getElementById('slip-challan-id').textContent = challanId;
+          document.getElementById('slip-challan-status').textContent = status.toUpperCase();
+          document.querySelectorAll('.slip-amount-val').forEach(el => el.textContent = amount);
+
+          ModalHelper.open('slip-modal');
+        });
+      });
+
+      // Pay / Simulate New Challan
+      const openChallanBtn = document.getElementById('open-new-challan-btn');
+      openChallanBtn.addEventListener('click', () => {
+        ModalHelper.open('payment-modal');
+      });
+
+      // Confirm Payment with 5-Second Undo Toast (HCI Principle: User Control & Freedom)
+      const confirmPaymentBtn = document.getElementById('confirm-payment-btn');
+      confirmPaymentBtn.addEventListener('click', () => {
+        ModalHelper.close('payment-modal');
+
+        const outstandingDisp = document.getElementById('outstanding-balance-display');
+        const prevText = outstandingDisp.textContent;
+
+        // Simulate updated state
+        outstandingDisp.textContent = "PKR 0 (Paid)";
+        outstandingDisp.style.color = "var(--success)";
+
+        // Show Toast with 5-second Undo Callback
+        ToastManager.show({
+          title: 'Payment Successful',
+          message: 'PKR 58,500 paid for 8th Sem advance registration.',
+          type: 'success',
+          undoCallback: () => {
+            // Revert state
+            outstandingDisp.textContent = prevText;
+            outstandingDisp.style.color = "var(--text-main)";
+            ToastManager.show({
+              title: 'Transaction Undone',
+              message: 'Payment simulation reverted. Ledger balance restored.',
+              type: 'warning'
+            });
+          }
+        });
+      });
+
+      // Print statement
+      document.getElementById('print-all-challans-btn').addEventListener('click', () => {
+        window.print();
+      });
+    });
+  </script>
+</body>
+</html>

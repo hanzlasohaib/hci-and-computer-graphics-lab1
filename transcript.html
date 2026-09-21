@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academic Transcript | National University of Modern Languages</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hci-inspector.css">
+  <style>
+    .gpa-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+      font-size: 0.82rem;
+    }
+    .grade-A { background: #dcfce7; color: #166534; }
+    .grade-A-minus { background: #ecfdf5; color: #047857; }
+    .grade-B-plus { background: #dbeafe; color: #1e40af; }
+    .grade-B { background: #e0f2fe; color: #0369a1; }
+    .grade-in-progress { background: #fef3c7; color: #b45309; }
+
+    /* Interactive Simulator Box */
+    .simulator-container {
+      background: linear-gradient(135deg, rgba(0, 40, 85, 0.04) 0%, rgba(5, 150, 105, 0.06) 100%);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Global Header (HCI: Consistency & Standards H4) -->
+  <header class="portal-header" data-heuristic="H4" data-heuristic-label="H4: Consistent Header Across All Pages">
+    <div class="header-inner">
+      <a href="dashboard.html" class="brand-wrapper">
+        <div class="numl-crest">NUML</div>
+        <div class="brand-text">
+          <h1>National University of Modern Languages</h1>
+          <p>Student Academic Portal • Islamabad</p>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="portal-nav" aria-label="Portal main navigation">
+        <a href="dashboard.html" class="nav-link">
+          <span>📊</span> Dashboard
+        </a>
+        <a href="fee-stats.html" class="nav-link">
+          <span>💳</span> Fee Stats
+        </a>
+        <a href="transcript.html" class="nav-link active">
+          <span>📜</span> Transcript
+        </a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
+          <span id="theme-icon">🌙</span>
+        </button>
+
+        <div class="user-profile-badge">
+          <div class="user-avatar">H</div>
+          <div class="user-details">
+            <div class="user-name dynamic-student-name">Hanzla Khan</div>
+            <div class="user-id dynamic-student-roll">21-BSCS-042</div>
+          </div>
+        </div>
+
+        <button class="icon-btn btn-logout" aria-label="Sign Out" title="Sign Out of Portal">
+          <span>🚪</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Breadcrumbs (HCI: Recognition Rather Than Recall H6) -->
+    <nav class="breadcrumbs" aria-label="Breadcrumb" data-heuristic="H6" data-heuristic-label="H6: Recognition via Breadcrumbs">
+      <a href="dashboard.html">Portal</a>
+      <span class="divider">/</span>
+      <a href="dashboard.html">Dashboard</a>
+      <span class="divider">/</span>
+      <span class="current">Official Academic Transcript</span>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div>
+        <h2 class="page-title">Academic Transcript & Grades</h2>
+        <p class="page-subtitle">
+          Department of Computer Science • Bachelor of Science in Computer Science (4 Years)
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn btn-outline" onclick="window.print()">
+          <span>🖨️</span> Print Official Transcript
+        </button>
+      </div>
+    </section>
+
+    <!-- Student Degree Summary Card (HCI: Visibility of System Status H1 + Aesthetic H8) -->
+    <section class="card" style="margin-bottom: 2rem;" data-heuristic="H1" data-heuristic-label="H1: Academic Standing & System Status">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem;">
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Student Name</span>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--primary);" class="dynamic-student-name">Hanzla Khan</h3>
+          <span style="font-size: 0.8rem; color: var(--text-muted);" class="dynamic-student-roll">Roll No: 21-BSCS-042</span>
+        </div>
+
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Degree Program</span>
+          <h4 style="font-size: 1rem; font-weight: 700;">BS Computer Science</h4>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Session: Fall 2021 - Fall 2026</span>
+        </div>
+
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Credits Completed</span>
+          <h4 style="font-size: 1.15rem; font-weight: 800;">108 / 134 Hrs</h4>
+          <span style="font-size: 0.8rem; color: var(--secondary); font-weight: 600;">80.6% Degree Finished</span>
+        </div>
+
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cumulative CGPA</span>
+          <h3 style="font-size: 1.45rem; font-weight: 800; color: var(--primary);" id="main-cgpa-display">3.68 <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">/ 4.00</span></h3>
+          <span class="badge badge-success">Grade: A (Distinction)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Star Feature: Interactive GPA "What-If" Simulator (HCI: Flexibility & Efficiency H7 + User Freedom H3) -->
+    <section class="simulator-container" data-heuristic="H7" data-heuristic-label="H7: Flexibility & 'What-If' Simulation">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 1.25rem;">✨</span>
+            <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--primary);">
+              Interactive "What-If" GPA Calculator
+            </h3>
+            <span class="badge badge-warning" style="font-size: 0.72rem;">HCI Feature</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Simulate prospective grades for current 7th semester courses and see your projected CGPA update in real time.
+          </p>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="background: var(--bg-surface); padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: right;">
+            <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Simulated CGPA</span>
+            <div style="font-size: 1.35rem; font-weight: 800; color: var(--secondary);" id="simulated-cgpa-val">3.68</div>
+          </div>
+          <button class="btn btn-sm btn-outline" id="reset-sim-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Revert">
+            🔄 Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Current Semester Simulator Controls -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; background: var(--bg-surface); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+        
+        <!-- Course 1: HCI & Computer Graphics (Primary Highlight) -->
+        <div style="border-left: 3px solid var(--primary); padding-left: 0.75rem;">
+          <label for="sim-hci" style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            CS-413: HCI & Graphics (3 Cr)
+          </label>
+          <select id="sim-hci" class="form-control sim-grade-select" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">
+            <option value="4.00" selected>A (4.00) - Projected</option>
+            <option value="3.67">A- (3.67)</option>
+            <option value="3.33">B+ (3.33)</option>
+            <option value="3.00">B (3.00)</option>
+          </select>
+        </div>
+
+        <!-- Course 2: Software Quality Eng -->
+        <div style="border-left: 3px solid #64748b; padding-left: 0.75rem;">
+          <label for="sim-sqe" style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            CS-415: Software Quality (3 Cr)
+          </label>
+          <select id="sim-sqe" class="form-control sim-grade-select" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">
+            <option value="4.00">A (4.00)</option>
+            <option value="3.67" selected>A- (3.67)</option>
+            <option value="3.33">B+ (3.33)</option>
+            <option value="3.00">B (3.00)</option>
+          </select>
+        </div>
+
+        <!-- Course 3: Mobile App Dev -->
+        <div style="border-left: 3px solid #64748b; padding-left: 0.75rem;">
+          <label for="sim-mad" style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            CS-418: Mobile App Dev (3 Cr)
+          </label>
+          <select id="sim-mad" class="form-control sim-grade-select" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">
+            <option value="4.00" selected>A (4.00)</option>
+            <option value="3.67">A- (3.67)</option>
+            <option value="3.33">B+ (3.33)</option>
+            <option value="3.00">B (3.00)</option>
+          </select>
+        </div>
+
+        <!-- Course 4: Final Year Project -->
+        <div style="border-left: 3px solid #64748b; padding-left: 0.75rem;">
+          <label for="sim-fyp" style="font-size: 0.82rem; font-weight: 700; display: block; margin-bottom: 0.25rem;">
+            CS-498: FYP - Phase I (3 Cr)
+          </label>
+          <select id="sim-fyp" class="form-control sim-grade-select" style="padding: 0.35rem 0.65rem; font-size: 0.82rem;">
+            <option value="4.00" selected>A (4.00)</option>
+            <option value="3.67">A- (3.67)</option>
+            <option value="3.33">B+ (3.33)</option>
+            <option value="3.00">B (3.00)</option>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls (HCI: Flexibility & Error Prevention H7 & H5) -->
+    <section class="card" style="margin-bottom: 1.5rem; padding: 1rem 1.5rem;" data-heuristic="H7" data-heuristic-label="H7: Instant Course Code Search">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; flex: 1;">
+          <div style="min-width: 260px;">
+            <label for="course-search-input" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+              Search Course by Title or Code
+            </label>
+            <input type="text" id="course-search-input" class="form-control" placeholder="e.g. CS-413 or Graphics..." style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+          </div>
+
+          <div>
+            <label for="filter-transcript-semester" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+              Select Semester
+            </label>
+            <select id="filter-transcript-semester" class="form-control" style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+              <option value="all">All Semesters (1 to 7)</option>
+              <option value="7">Semester 7 (Fall 2026 - Current)</option>
+              <option value="6">Semester 6 (Spring 2026)</option>
+              <option value="5">Semester 5 (Fall 2025)</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Semester Course Grade Tables (HCI: Consistency H4 + Real World Match H2) -->
+    <div id="transcript-tables-container">
+      
+      <!-- Semester 7 (Current Active Semester) -->
+      <section class="card semester-block" data-semester="7" style="margin-bottom: 1.5rem;">
+        <div class="card-header" style="background: var(--bg-subtle); padding: 0.75rem 1.25rem; border-radius: var(--radius-md) var(--radius-md) 0 0;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <span style="font-weight: 800; color: var(--primary);">7th Semester (Fall 2026)</span>
+            <span class="badge badge-warning">Currently In-Progress</span>
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Enrolled Credits: <strong>15 Hrs</strong> • Projected SGPA: <strong style="color:var(--secondary);">3.84</strong>
+          </div>
+        </div>
+
+        <div class="table-container" style="border: none;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;">Course Code</th>
+                <th style="width: 45%;">Course Title</th>
+                <th style="width: 15%;">Credit Hours</th>
+                <th style="width: 15%;">Grade</th>
+                <th style="width: 10%; text-align: right;">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Highlighted CS-413 HCI & Computer Graphics -->
+              <tr style="background: rgba(0, 40, 85, 0.03);" data-heuristic="H2" data-heuristic-label="H2: Course Subject CS-413">
+                <td>
+                  <span style="font-family: var(--font-mono); font-weight: 700; color: var(--primary);">CS-413</span>
+                </td>
+                <td>
+                  <strong>Human-Computer Interaction & Computer Graphics</strong><br>
+                  <span style="font-size: 0.75rem; color: var(--text-muted);">
+                    Theory (2 Cr) + Lab (1 Cr) • Midterm: 27/30 (A)
+                  </span>
+                </td>
+                <td>3.0</td>
+                <td>
+                  <span class="badge badge-success">A (Projected)</span>
+                </td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-415</span></td>
+                <td>Software Quality Engineering</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A-</span></td>
+                <td style="text-align: right; font-weight: 700;">3.67</td>
+              </tr>
+
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-418</span></td>
+                <td>Mobile Application Development</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">MG-301</span></td>
+                <td>Entrepreneurship & Tech Ventures</td>
+                <td>3.0</td>
+                <td><span class="badge badge-info">B+</span></td>
+                <td style="text-align: right; font-weight: 700;">3.33</td>
+              </tr>
+
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-498</span></td>
+                <td>Final Year Project - I</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Semester 6 -->
+      <section class="card semester-block" data-semester="6" style="margin-bottom: 1.5rem;">
+        <div class="card-header" style="padding: 0.75rem 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <span style="font-weight: 800;">6th Semester (Spring 2026)</span>
+            <span class="badge badge-success">Completed</span>
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Credits: <strong>16 Hrs</strong> • SGPA: <strong>3.72</strong>
+          </div>
+        </div>
+
+        <div class="table-container" style="border: none;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;">Course Code</th>
+                <th style="width: 45%;">Course Title</th>
+                <th style="width: 15%;">Credit Hours</th>
+                <th style="width: 15%;">Grade</th>
+                <th style="width: 10%; text-align: right;">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-312</span></td>
+                <td>Artificial Intelligence</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-314</span></td>
+                <td>Web Engineering</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A-</span></td>
+                <td style="text-align: right; font-weight: 700;">3.67</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-316</span></td>
+                <td>Computer Networks</td>
+                <td>4.0</td>
+                <td><span class="badge badge-info">B+</span></td>
+                <td style="text-align: right; font-weight: 700;">3.33</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-318</span></td>
+                <td>Automata Theory & Computability</td>
+                <td>3.0</td>
+                <td><span class="badge badge-info">B</span></td>
+                <td style="text-align: right; font-weight: 700;">3.00</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">SS-201</span></td>
+                <td>Professional Ethics</td>
+                <td>2.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Semester 5 -->
+      <section class="card semester-block" data-semester="5" style="margin-bottom: 1.5rem;">
+        <div class="card-header" style="padding: 0.75rem 1.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <span style="font-weight: 800;">5th Semester (Fall 2025)</span>
+            <span class="badge badge-success">Completed</span>
+          </div>
+          <div style="font-size: 0.82rem; color: var(--text-muted);">
+            Credits: <strong>17 Hrs</strong> • SGPA: <strong>3.65</strong>
+          </div>
+        </div>
+
+        <div class="table-container" style="border: none;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;">Course Code</th>
+                <th style="width: 45%;">Course Title</th>
+                <th style="width: 15%;">Credit Hours</th>
+                <th style="width: 15%;">Grade</th>
+                <th style="width: 10%; text-align: right;">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-301</span></td>
+                <td>Database Systems</td>
+                <td>4.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-303</span></td>
+                <td>Operating Systems</td>
+                <td>4.0</td>
+                <td><span class="badge badge-success">A-</span></td>
+                <td style="text-align: right; font-weight: 700;">3.67</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">CS-305</span></td>
+                <td>Design & Analysis of Algorithms</td>
+                <td>3.0</td>
+                <td><span class="badge badge-info">B+</span></td>
+                <td style="text-align: right; font-weight: 700;">3.33</td>
+              </tr>
+              <tr>
+                <td><span style="font-family: var(--font-mono); font-weight: 700;">MT-204</span></td>
+                <td>Linear Algebra</td>
+                <td>3.0</td>
+                <td><span class="badge badge-success">A</span></td>
+                <td style="text-align: right; font-weight: 700;">4.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>National University of Modern Languages (NUML)</strong> • H-9, Islamabad, Pakistan
+      </div>
+      <div>
+        Subject: Human-Computer Interaction & Computer Graphics • Lab Project
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/hci-inspector.js"></script>
+
+  <script>
+    // Transcript Search & Interactive GPA Simulator
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('course-search-input');
+      const semesterFilter = document.getElementById('filter-transcript-semester');
+      const semesterBlocks = document.querySelectorAll('.semester-block');
+
+      // Search and Filter Functionality
+      function filterCourses() {
+        const query = searchInput.value.toLowerCase().trim();
+        const sem = semesterFilter.value;
+
+        semesterBlocks.forEach(block => {
+          const blockSem = block.getAttribute('data-semester');
+          const semMatch = (sem === 'all' || blockSem === sem);
+
+          if (!semMatch) {
+            block.style.display = 'none';
+            return;
+          }
+
+          let anyRowVisible = false;
+          const rows = block.querySelectorAll('tbody tr');
+          rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            const textMatch = query === '' || text.includes(query);
+            row.style.display = textMatch ? '' : 'none';
+            if (textMatch) anyRowVisible = true;
+          });
+
+          block.style.display = anyRowVisible ? '' : 'none';
+        });
+      }
+
+      searchInput.addEventListener('input', filterCourses);
+      semesterFilter.addEventListener('change', filterCourses);
+
+      // Interactive What-If GPA Calculator Logic
+      const simSelects = document.querySelectorAll('.sim-grade-select');
+      const simulatedCgpaVal = document.getElementById('simulated-cgpa-val');
+      const resetSimBtn = document.getElementById('reset-sim-btn');
+
+      // Base: 93 completed credits before 7th sem with GPA 3.65
+      // Current 7th sem has 15 credits
+      const previousCredits = 93;
+      const previousTotalPoints = 93 * 3.65; // ~339.45
+
+      function recalculateSimulatedGpa() {
+        let currentSemPoints = 0;
+        let currentSemCredits = 12; // 4 courses of 3 credits + 1 course of 3 credits = 15 credits
+        
+        simSelects.forEach(select => {
+          const pts = parseFloat(select.value);
+          currentSemPoints += pts * 3.0; // 3 credit hours each
+        });
+
+        const totalPoints = previousTotalPoints + currentSemPoints;
+        const totalCredits = previousCredits + (simSelects.length * 3.0);
+        const newCgpa = (totalPoints / totalCredits).toFixed(2);
+
+        simulatedCgpaVal.textContent = newCgpa;
+      }
+
+      simSelects.forEach(select => {
+        select.addEventListener('change', () => {
+          recalculateSimulatedGpa();
+          ToastManager.show({
+            title: 'CGPA Recalculated',
+            message: `Simulated Projected CGPA updated to ${simulatedCgpaVal.textContent}`,
+            type: 'info'
+          });
+        });
+      });
+
+      resetSimBtn.addEventListener('click', () => {
+        document.getElementById('sim-hci').value = "4.00";
+        document.getElementById('sim-sqe').value = "3.67";
+        document.getElementById('sim-mad').value = "4.00";
+        document.getElementById('sim-fyp').value = "4.00";
+        recalculateSimulatedGpa();
+        ToastManager.show({
+          title: 'Simulator Reset',
+          message: 'Restored original projected grades.',
+          type: 'info'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

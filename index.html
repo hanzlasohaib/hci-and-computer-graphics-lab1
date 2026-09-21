@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUML Student Academic Portal | HCI Lab Project</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/hci-inspector.css">
+</head>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
+
+  <!-- Global Header -->
+  <header class="portal-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-wrapper">
+        <div class="numl-crest">NUML</div>
+        <div class="brand-text">
+          <h1>National University of Modern Languages</h1>
+          <p>HCI & Computer Graphics • Lab Project</p>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <a href="login.html" class="btn btn-sm btn-primary">Portal Login →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero & Gateway -->
+  <main class="main-content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 3rem 1.5rem;">
+    
+    <div style="max-width: 840px;">
+      
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--primary-light); color: var(--primary); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.82rem; font-weight: 700; margin-bottom: 1.25rem;">
+        <span>🎓</span> HCI & Computer Graphics (CS-413) • Heuristic Evaluation Prototype
+      </div>
+
+      <h1 style="font-family: var(--font-display); font-size: 2.75rem; font-weight: 800; line-height: 1.15; margin-bottom: 1rem; color: var(--text-main);">
+        NUML Student Portal Usability Redesign
+      </h1>
+
+      <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6;">
+        Engineered according to Jakob Nielsen's 10 Usability Heuristics with a rigorous focus on:
+        <br>
+        <strong style="color: #1e40af;">Easy to Learn</strong> (Learnability) • 
+        <strong style="color: #166534;">Easy to Use</strong> (Usability & Efficiency) • 
+        <strong style="color: #991b1b;">Less Error</strong> (Error Prevention & Recovery)
+      </p>
+
+      <!-- 4 Pages Navigation Hub -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; text-align: left; margin-bottom: 2.5rem;">
+        
+        <!-- Page 1: Login -->
+        <a href="login.html" class="card" style="text-decoration: none; color: inherit; transition: var(--transition);">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">🔐</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">1. Login Page</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Live roll format masking, password checklist, Caps-Lock warning, and demo auto-fill.
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary); display: inline-block; margin-top: 0.75rem;">
+            Explore Login →
+          </span>
+        </a>
+
+        <!-- Page 2: Dashboard -->
+        <a href="dashboard.html" class="card" style="text-decoration: none; color: inherit; transition: var(--transition);">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">📊</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">2. Student Dashboard</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Academic timeline (Week 8), CS-413 HCI timetable highlight, KPI status cards, and announcements.
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary); display: inline-block; margin-top: 0.75rem;">
+            Explore Dashboard →
+          </span>
+        </a>
+
+        <!-- Page 3: Fee Stats -->
+        <a href="fee-stats.html" class="card" style="text-decoration: none; color: inherit; transition: var(--transition);">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">💳</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">3. Fee Statistics</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Challan history, 3-copy printable bank slip, online payment modal, and 5-second Undo toast.
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary); display: inline-block; margin-top: 0.75rem;">
+            Explore Fee Stats →
+          </span>
+        </a>
+
+        <!-- Page 4: Transcript -->
+        <a href="transcript.html" class="card" style="text-decoration: none; color: inherit; transition: var(--transition);">
+          <div style="font-size: 2rem; margin-bottom: 0.75rem;">📜</div>
+          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.35rem;">4. Academic Transcript</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+            Semester course grades, CS-413 marks, search/filters, and interactive "What-If" GPA Simulator.
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--primary); display: inline-block; margin-top: 0.75rem;">
+            Explore Transcript →
+          </span>
+        </a>
+
+      </div>
+
+      <!-- Quick Action CTA -->
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a href="login.html" class="btn btn-primary btn-lg">
+          Launch Application (Start from Login) →
+        </a>
+        <button class="btn btn-outline btn-lg" onclick="ModalHelper.open('hci-report-dialog')">
+          📊 View HCI Heuristics Matrix
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>National University of Modern Languages (NUML)</strong> • H-9, Islamabad
+      </div>
+      <div>
+        Department of Computer Science • 7th Semester Midterm Lab Evaluation
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/hci-inspector.js"></script>
+</body>
+</html>
