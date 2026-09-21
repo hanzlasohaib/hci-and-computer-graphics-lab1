@@ -58,7 +58,11 @@ const ThemeController = {
     localStorage.setItem('numl_theme', theme);
     const icon = document.getElementById('theme-icon');
     if (icon) {
-      icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      if (typeof LucideIcons !== 'undefined') {
+        icon.innerHTML = theme === 'dark' ? LucideIcons.sun : LucideIcons.moon;
+      } else {
+        icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      }
     }
   },
   toggle() {
@@ -87,22 +91,27 @@ const ToastManager = {
     toast.className = 'toast';
     toast.setAttribute('role', 'alert');
 
-    const icons = {
-      success: '✅',
-      warning: '⚠️',
-      danger: '❌',
-      info: 'ℹ️'
-    };
+    let iconSvg = 'ℹ️';
+    if (typeof LucideIcons !== 'undefined') {
+      const iconMap = {
+        success: LucideIcons.checkCircle,
+        warning: LucideIcons.alertCircle,
+        danger: LucideIcons.shieldAlert,
+        info: LucideIcons.fileText
+      };
+      iconSvg = iconMap[type] || LucideIcons.fileText;
+    }
 
     let undoBtnHtml = '';
     if (undoCallback) {
-      undoBtnHtml = `<button class="toast-action-btn" id="toast-undo-btn">↩ Undo (5s)</button>`;
+      const undoIcon = typeof LucideIcons !== 'undefined' ? LucideIcons.rotateCcw : '↩';
+      undoBtnHtml = `<button class="toast-action-btn" id="toast-undo-btn" style="display:inline-flex; align-items:center; gap:0.35rem;">${undoIcon} Undo (5s)</button>`;
     }
 
     toast.innerHTML = `
       <div class="toast-content">
         <div class="toast-title">
-          <span>${icons[type] || 'ℹ️'}</span>
+          <span style="display:flex; align-items:center;">${iconSvg}</span>
           <span>${title}</span>
         </div>
         <div class="toast-desc">${message}</div>

@@ -6,6 +6,7 @@
   <title>Fee Statistics | National University of Modern Languages</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
+  <link rel="stylesheet" href="css/command-palette.css">
   <style>
     /* 3-copy Challan Printable Slip Styles */
     .challan-slip-preview {
@@ -50,20 +51,27 @@
       <!-- Navigation Links -->
       <nav class="portal-nav" aria-label="Portal main navigation">
         <a href="dashboard.html" class="nav-link">
-          <span>📊</span> Dashboard
+          <span data-lucide="layoutDashboard"></span> Dashboard
         </a>
         <a href="fee-stats.html" class="nav-link active">
-          <span>💳</span> Fee Stats
+          <span data-lucide="creditCard"></span> Fee Stats
         </a>
         <a href="transcript.html" class="nav-link">
-          <span>📜</span> Transcript
+          <span data-lucide="fileText"></span> Transcript
         </a>
       </nav>
 
       <!-- Right Header Actions -->
       <div class="header-actions">
+        <!-- Command Palette Trigger (pacocoursey/cmdk & shadcn/ui) -->
+        <button class="command-trigger-btn" aria-label="Search actions or press Ctrl+K" title="Search actions (Ctrl+K)">
+          <span data-lucide="search"></span>
+          <span>Search or jump to...</span>
+          <kbd class="cmdk-kbd">Ctrl K</kbd>
+        </button>
+
         <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
-          <span id="theme-icon">🌙</span>
+          <span id="theme-icon" data-lucide="moon"></span>
         </button>
 
         <div class="user-profile-badge">
@@ -75,7 +83,7 @@
         </div>
 
         <button class="icon-btn btn-logout" aria-label="Sign Out" title="Sign Out of Portal">
-          <span>🚪</span>
+          <span data-lucide="logOut"></span>
         </button>
       </div>
     </div>
@@ -102,12 +110,15 @@
         </p>
       </div>
 
-      <div style="display: flex; gap: 0.75rem;">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="export-fee-csv-btn" title="Export Fee Ledger as CSV">
+          <span data-lucide="download"></span> Export CSV
+        </button>
         <button class="btn btn-outline" id="print-all-challans-btn">
-          <span>🖨️</span> Print Financial Statement
+          <span data-lucide="printer"></span> Print Statement
         </button>
         <button class="btn btn-primary" id="open-new-challan-btn">
-          <span>💳</span> Pay / Simulate Next Challan
+          <span data-lucide="creditCard"></span> Pay / Simulate Next Challan
         </button>
       </div>
     </section>
@@ -121,7 +132,9 @@
           <h3 class="stat-value">PKR 412,000</h3>
           <span class="stat-desc">Semesters 1 through 7</span>
         </div>
-        <div class="stat-icon primary">📊</div>
+        <div class="stat-icon primary">
+          <span data-lucide="fileText"></span>
+        </div>
       </div>
 
       <!-- Total Paid -->
@@ -131,7 +144,9 @@
           <h3 class="stat-value" style="color: var(--secondary);">PKR 412,000</h3>
           <span class="stat-desc">100% of assessed dues cleared</span>
         </div>
-        <div class="stat-icon secondary">✅</div>
+        <div class="stat-icon secondary">
+          <span data-lucide="checkCircle"></span>
+        </div>
       </div>
 
       <!-- Current Balance -->
@@ -141,7 +156,9 @@
           <h3 class="stat-value" id="outstanding-balance-display" style="color: var(--success);">PKR 0</h3>
           <span class="stat-desc" id="outstanding-balance-desc">No overdue fines or liabilities</span>
         </div>
-        <div class="stat-icon secondary" id="outstanding-icon">💰</div>
+        <div class="stat-icon secondary" id="outstanding-icon">
+          <span data-lucide="creditCard"></span>
+        </div>
       </div>
 
       <!-- Next Due Date -->
@@ -151,7 +168,9 @@
           <h3 class="stat-value" style="font-size: 1.45rem;">Jan 15, 2027</h3>
           <span class="stat-desc">8th Semester Final Project & Tuition</span>
         </div>
-        <div class="stat-icon warning">📅</div>
+        <div class="stat-icon warning">
+          <span data-lucide="clock"></span>
+        </div>
       </div>
     </section>
 
@@ -185,8 +204,8 @@
         </div>
 
         <div>
-          <button class="btn btn-sm btn-outline" id="reset-filters-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Reset">
-            🔄 Reset Filters
+          <button class="btn btn-sm btn-outline" id="reset-filters-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Reset" style="gap:0.35rem;">
+            <span data-lucide="rotateCcw"></span> Reset Filters
           </button>
         </div>
 
@@ -197,7 +216,7 @@
     <section class="card" data-heuristic="H2" data-heuristic-label="H2: Pakistani University Challan Terminology">
       <div class="card-header">
         <h3 class="card-title">
-          <span>📜</span> Semester Fee Challans & Receipts
+          <span data-lucide="fileText"></span> Semester Fee Challans & Receipts
         </h3>
         <span style="font-size: 0.8rem; color: var(--text-muted);">
           Official Bank Challans (1Link Kuickpay Consumer ID: <strong style="color:var(--text-main);">9100-21042</strong>)
@@ -242,7 +261,7 @@
               </td>
               <td style="text-align: right;">
                 <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-26F-7042" data-sem="7th Semester" data-amount="58,500" data-status="Paid">
-                  📄 Receipt
+                  <span data-lucide="fileText"></span> Receipt
                 </button>
               </td>
             </tr>
@@ -271,7 +290,7 @@
               </td>
               <td style="text-align: right;">
                 <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-26S-6042" data-sem="6th Semester" data-amount="58,000" data-status="Paid">
-                  📄 Receipt
+                  <span data-lucide="fileText"></span> Receipt
                 </button>
               </td>
             </tr>
@@ -299,20 +318,36 @@
               </td>
               <td style="text-align: right;">
                 <button class="btn btn-sm btn-outline view-slip-btn" data-challan="NUM-25F-5042" data-sem="5th Semester" data-amount="56,500" data-status="Paid">
-                  📄 Receipt
+                  <span data-lucide="fileText"></span> Receipt
                 </button>
               </td>
             </tr>
 
           </tbody>
         </table>
+
+        <!-- Primer Blankslate Empty State -->
+        <div class="blankslate" id="fee-blankslate">
+          <div class="blankslate-icon">
+            <span data-lucide="search" style="width: 36px; height: 36px;"></span>
+          </div>
+          <h3 class="blankslate-heading">No Challans Match Your Filter</h3>
+          <p class="blankslate-text">
+            There are no fee vouchers matching the selected semester and status criteria. Try resetting the filters.
+          </p>
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('reset-filters-btn').click()">
+            Reset Filter Options
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- HCI Explanatory Box -->
     <div style="margin-top: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem;" data-heuristic="H5" data-heuristic-label="H5: Error Prevention & Undo Freedom">
       <div style="display: flex; gap: 0.85rem; align-items: flex-start;">
-        <div style="font-size: 1.5rem;">🛡️</div>
+        <div style="color: var(--primary);">
+          <span data-lucide="shieldAlert" style="width: 24px; height: 24px;"></span>
+        </div>
         <div>
           <strong style="font-size: 0.92rem; color: var(--text-main);">HCI Error Prevention & Reversibility Mechanism</strong>
           <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
@@ -328,7 +363,9 @@
   <dialog class="modal" id="payment-modal" data-heuristic="H5" data-heuristic-label="H5: Confirmation Dialog Safeguard">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">💳 Secure Online Fee Payment</h3>
+        <h3 class="modal-title" style="display:flex; align-items:center; gap:0.5rem;">
+          <span data-lucide="creditCard"></span> Secure Online Fee Payment
+        </h3>
         <button class="icon-btn" onclick="ModalHelper.close('payment-modal')" aria-label="Close dialog">✕</button>
       </div>
 
@@ -388,7 +425,9 @@
   <dialog class="modal" id="slip-modal" style="max-width: 780px;">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title">📄 Official Fee Challan Voucher</h3>
+        <h3 class="modal-title" style="display:flex; align-items:center; gap:0.5rem;">
+          <span data-lucide="fileText"></span> Official Fee Challan Voucher
+        </h3>
         <button class="icon-btn" onclick="ModalHelper.close('slip-modal')" aria-label="Close dialog">✕</button>
       </div>
 
@@ -457,7 +496,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline" onclick="ModalHelper.close('slip-modal')">Close</button>
         <button type="button" class="btn btn-primary" onclick="window.print()">
-          🖨️ Print Voucher
+          <span data-lucide="printer"></span> Print Voucher
         </button>
       </div>
     </div>
@@ -478,7 +517,9 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
+  <script src="js/icons.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/command-palette.js"></script>
   <script src="js/hci-inspector.js"></script>
 
   <script>
@@ -488,11 +529,14 @@
       const filterStatus = document.getElementById('filter-status');
       const resetBtn = document.getElementById('reset-filters-btn');
       const tableRows = document.querySelectorAll('#challans-tbody tr');
+      const blankslate = document.getElementById('fee-blankslate');
+      const table = document.getElementById('challans-table');
 
       // Filter handling
       function applyFilters() {
         const semVal = filterSemester.value;
         const statusVal = filterStatus.value;
+        let visibleCount = 0;
 
         tableRows.forEach(row => {
           const rowSem = row.getAttribute('data-semester');
@@ -501,8 +545,19 @@
           const semMatches = (semVal === 'all' || rowSem === semVal);
           const statusMatches = (statusVal === 'all' || rowStatus === statusVal);
 
-          row.style.display = (semMatches && statusMatches) ? '' : 'none';
+          const isVisible = (semMatches && statusMatches);
+          row.style.display = isVisible ? '' : 'none';
+          if (isVisible) visibleCount++;
         });
+
+        // Show/hide Primer blankslate empty state
+        if (visibleCount === 0) {
+          table.style.display = 'none';
+          blankslate.style.display = 'block';
+        } else {
+          table.style.display = 'table';
+          blankslate.style.display = 'none';
+        }
       }
 
       filterSemester.addEventListener('change', applyFilters);
@@ -516,6 +571,31 @@
           title: 'Filters Reset',
           message: 'Showing all semester fee challans.',
           type: 'info'
+        });
+      });
+
+      // Export CSV (Benchmarked from GitHub Primer data export patterns)
+      document.getElementById('export-fee-csv-btn').addEventListener('click', () => {
+        const rows = [
+          ['Challan ID', 'Semester', 'Program', 'Total Amount (PKR)', 'Due Date', 'Status'],
+          ['NUM-26F-7042', '7th Semester (Fall 2026)', 'BS Computer Science', '58500', '2026-08-25', 'Paid'],
+          ['NUM-26S-6042', '6th Semester (Spring 2026)', 'BS Computer Science', '58000', '2026-02-10', 'Paid'],
+          ['NUM-25F-5042', '5th Semester (Fall 2025)', 'BS Computer Science', '56500', '2025-08-20', 'Paid']
+        ];
+
+        let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "NUML_Fee_Records_21-BSCS-042.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        ToastManager.show({
+          title: 'CSV Exported',
+          message: 'Fee records successfully downloaded as CSV.',
+          type: 'success'
         });
       });
 
@@ -549,17 +629,14 @@
         const outstandingDisp = document.getElementById('outstanding-balance-display');
         const prevText = outstandingDisp.textContent;
 
-        // Simulate updated state
         outstandingDisp.textContent = "PKR 0 (Paid)";
         outstandingDisp.style.color = "var(--success)";
 
-        // Show Toast with 5-second Undo Callback
         ToastManager.show({
           title: 'Payment Successful',
           message: 'PKR 58,500 paid for 8th Sem advance registration.',
           type: 'success',
           undoCallback: () => {
-            // Revert state
             outstandingDisp.textContent = prevText;
             outstandingDisp.style.color = "var(--text-main)";
             ToastManager.show({

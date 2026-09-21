@@ -6,6 +6,7 @@
   <title>Student Dashboard | National University of Modern Languages</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
+  <link rel="stylesheet" href="css/command-palette.css">
 </head>
 <body>
 
@@ -23,20 +24,27 @@
       <!-- Navigation Links -->
       <nav class="portal-nav" aria-label="Portal main navigation">
         <a href="dashboard.html" class="nav-link active">
-          <span>📊</span> Dashboard
+          <span data-lucide="layoutDashboard"></span> Dashboard
         </a>
         <a href="fee-stats.html" class="nav-link">
-          <span>💳</span> Fee Stats
+          <span data-lucide="creditCard"></span> Fee Stats
         </a>
         <a href="transcript.html" class="nav-link">
-          <span>📜</span> Transcript
+          <span data-lucide="fileText"></span> Transcript
         </a>
       </nav>
 
-      <!-- Right Header Actions (Theme, Profile, Logout) -->
+      <!-- Right Header Actions (Command Palette Trigger, Theme, Profile, Logout) -->
       <div class="header-actions">
+        <!-- Command Palette Trigger (pacocoursey/cmdk & shadcn/ui) -->
+        <button class="command-trigger-btn" aria-label="Search actions or press Ctrl+K" title="Search actions (Ctrl+K)">
+          <span data-lucide="search"></span>
+          <span>Search or jump to...</span>
+          <kbd class="cmdk-kbd">Ctrl K</kbd>
+        </button>
+
         <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
-          <span id="theme-icon">🌙</span>
+          <span id="theme-icon" data-lucide="moon"></span>
         </button>
 
         <div class="user-profile-badge" title="Logged in as student">
@@ -48,7 +56,7 @@
         </div>
 
         <button class="icon-btn btn-logout" aria-label="Sign Out" title="Sign Out of Portal">
-          <span>🚪</span>
+          <span data-lucide="logOut"></span>
         </button>
       </div>
     </div>
@@ -76,8 +84,8 @@
       </div>
 
       <div style="display: flex; gap: 0.75rem; align-items: center;">
-        <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">
-          ● Academic Status: Regular (Enrolled)
+        <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.85rem; gap: 0.4rem;">
+          <span data-lucide="checkCircle" style="width: 14px; height: 14px;"></span> Academic Status: Regular (Enrolled)
         </span>
       </div>
     </section>
@@ -89,7 +97,9 @@
           <strong style="font-size: 0.95rem; color: var(--text-main);">Current Semester Timeline (Fall 2026)</strong>
           <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 0.5rem;">Week 8 of 16 (Midterm Examinations Phase)</span>
         </div>
-        <span class="badge badge-info">50% Semester Completed</span>
+        <span class="badge badge-info" style="gap: 0.35rem;">
+          <span data-lucide="clock" style="width: 13px; height: 13px;"></span> 50% Semester Completed
+        </span>
       </div>
       
       <!-- Visual Progress Bar -->
@@ -99,7 +109,9 @@
 
       <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
         <span>Session Start: Aug 15</span>
-        <span style="font-weight: 700; color: var(--accent-gold);">★ Current: Midterm Week</span>
+        <span style="font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 0.3rem;">
+          <span data-lucide="sparkles" style="width: 13px; height: 13px;"></span> Current: Midterm Week
+        </span>
         <span>Final Exams: Jan 10</span>
       </div>
     </section>
@@ -113,7 +125,9 @@
           <h3 class="stat-value dynamic-student-cgpa">3.68</h3>
           <span class="stat-desc">Target: 3.75+ for Dean's Honor</span>
         </div>
-        <div class="stat-icon primary">🎓</div>
+        <div class="stat-icon primary">
+          <span data-lucide="graduationCap"></span>
+        </div>
       </div>
 
       <!-- Attendance Card -->
@@ -123,7 +137,9 @@
           <h3 class="stat-value" style="color: var(--secondary);">88%</h3>
           <span class="stat-desc">✓ Eligible for Midterm Exams (>75%)</span>
         </div>
-        <div class="stat-icon secondary">📅</div>
+        <div class="stat-icon secondary">
+          <span data-lucide="checkCircle"></span>
+        </div>
       </div>
 
       <!-- Credits Card -->
@@ -133,7 +149,9 @@
           <h3 class="stat-value">108 <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500;">/ 134</span></h3>
           <span class="stat-desc">26 Credits remaining for graduation</span>
         </div>
-        <div class="stat-icon warning">📚</div>
+        <div class="stat-icon warning">
+          <span data-lucide="bookOpen"></span>
+        </div>
       </div>
 
       <!-- Fee Status Card -->
@@ -143,7 +161,9 @@
           <h3 class="stat-value" style="color: var(--success); font-size: 1.5rem;">PKR 0</h3>
           <span class="stat-desc">✓ Fall 2026 Dues Cleared</span>
         </div>
-        <div class="stat-icon secondary">💳</div>
+        <div class="stat-icon secondary">
+          <span data-lucide="creditCard"></span>
+        </div>
       </div>
     </section>
 
@@ -154,7 +174,7 @@
       <div class="card" data-heuristic="H2" data-heuristic-label="H2: Authentic NUML Class Schedule">
         <div class="card-header">
           <h3 class="card-title">
-            <span>🕒</span> Today's Classes & Labs
+            <span data-lucide="clock"></span> Today's Classes & Labs
           </h3>
           <span style="font-size: 0.8rem; color: var(--text-muted);">Monday • Week 8</span>
         </div>
@@ -170,7 +190,9 @@
                   Human-Computer Interaction & Computer Graphics
                 </h4>
               </div>
-              <span class="badge badge-success">● Next Up</span>
+              <span class="badge badge-success" style="gap: 0.3rem;">
+                <span data-lucide="checkCircle" style="width: 12px; height: 12px;"></span> Next Up
+              </span>
             </div>
             
             <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.65rem;">
@@ -212,14 +234,14 @@
       <div class="card" data-heuristic="H7" data-heuristic-label="H7: Flexibility & Fast Navigation Shortcuts">
         <div class="card-header">
           <h3 class="card-title">
-            <span>⚡</span> Quick Launchpad
+            <span data-lucide="sparkles"></span> Quick Launchpad
           </h3>
           <span style="font-size: 0.78rem; color: var(--text-muted);">Direct Portals</span>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
           <a href="fee-stats.html" class="btn btn-outline" style="justify-content: flex-start; padding: 0.9rem 1rem;">
-            <span style="font-size: 1.25rem;">💳</span>
+            <span data-lucide="creditCard" style="width: 22px; height: 22px; color: var(--primary);"></span>
             <div style="text-align: left; margin-left: 0.5rem;">
               <div style="font-weight: 700; font-size: 0.9rem;">Fee Stats & Online Challan</div>
               <div style="font-size: 0.75rem; color: var(--text-muted);">Pay dues, download challans, payment history</div>
@@ -227,7 +249,7 @@
           </a>
 
           <a href="transcript.html" class="btn btn-outline" style="justify-content: flex-start; padding: 0.9rem 1rem;">
-            <span style="font-size: 1.25rem;">📜</span>
+            <span data-lucide="fileText" style="width: 22px; height: 22px; color: var(--primary);"></span>
             <div style="text-align: left; margin-left: 0.5rem;">
               <div style="font-weight: 700; font-size: 0.9rem;">Academic Transcript & GPA Simulator</div>
               <div style="font-size: 0.75rem; color: var(--text-muted);">Semester grades, credit breakdown, what-if calc</div>
@@ -236,11 +258,13 @@
 
           <div style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); margin-top: 0.5rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-              <strong style="font-size: 0.85rem;">🎓 HCI Lab Project Note</strong>
+              <strong style="font-size: 0.85rem; display: flex; align-items: center; gap: 0.35rem;">
+                <span data-lucide="graduationCap"></span> HCI Lab Project Note
+              </strong>
               <span class="badge badge-warning">Class of HCI</span>
             </div>
             <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;">
-              Use the top-right <strong>"HCI Evaluation Inspector"</strong> switch to inspect all Jakob Nielsen Usability Heuristics implemented across this portal.
+              Press <kbd class="cmdk-kbd">Ctrl K</kbd> to open the global Command Palette, or use the top-right <strong>"HCI Evaluation Inspector"</strong> to inspect all Jakob Nielsen Usability Heuristics.
             </p>
           </div>
         </div>
@@ -252,14 +276,14 @@
     <section class="card" data-heuristic="H10" data-heuristic-label="H10: Announcements & Timely Help">
       <div class="card-header">
         <h3 class="card-title">
-          <span>📢</span> Official NUML Academic Notices
+          <span data-lucide="bell"></span> Official NUML Academic Notices
         </h3>
         <span style="font-size: 0.8rem; color: var(--text-muted);">Campus Updates</span>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 0.85rem;">
         <div style="display: flex; align-items: flex-start; gap: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color);">
-          <span style="font-size: 1.25rem;">📝</span>
+          <span data-lucide="fileText" style="color: var(--primary); margin-top: 0.2rem;"></span>
           <div>
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <strong style="font-size: 0.88rem;">CS-413: HCI & Computer Graphics Midterm Lab Evaluation</strong>
@@ -272,7 +296,7 @@
         </div>
 
         <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
-          <span style="font-size: 1.25rem;">🏛️</span>
+          <span data-lucide="checkCircle" style="color: var(--secondary); margin-top: 0.2rem;"></span>
           <div>
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <strong style="font-size: 0.88rem;">Fall 2026 Examination Fee Clearance</strong>
@@ -303,7 +327,9 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
+  <script src="js/icons.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/command-palette.js"></script>
   <script src="js/hci-inspector.js"></script>
 </body>
 </html>

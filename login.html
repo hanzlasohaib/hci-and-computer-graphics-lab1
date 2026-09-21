@@ -6,12 +6,13 @@
   <title>Student Portal Login | National University of Modern Languages</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
+  <link rel="stylesheet" href="css/command-palette.css">
 </head>
 <body class="login-page-body">
 
   <div class="login-card-container">
     
-    <!-- Branding Header (HCI: Aesthetic & Minimalist + Real-World Match) -->
+    <!-- Branding Header (HCI: Aesthetic & Minimalist + Real-World Match H2) -->
     <div class="login-brand-header" data-heuristic="H2" data-heuristic-label="H2: Real-World NUML Identity">
       <div class="login-brand-logo">NUML</div>
       <h1 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--primary); font-weight: 800;">
@@ -22,7 +23,7 @@
       </p>
     </div>
 
-    <!-- Login Card -->
+    <!-- Login Card (shadcn/ui inspired card elevation) -->
     <main class="login-card" data-heuristic="H8" data-heuristic-label="H8: Minimalist & Clean Card">
       <div style="margin-bottom: 1.5rem;">
         <h2 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;">Student Sign In</h2>
@@ -32,27 +33,33 @@
       <!-- Demo Credentials Quick-Fill (HCI: Recognition Rather Than Recall H6 + Learnability) -->
       <div class="demo-credentials-box" data-heuristic="H6" data-heuristic-label="H6: Recognition over Recall">
         <div class="demo-text">
-          <span>💡 <strong>Class Demo Account:</strong></span><br>
-          <span style="font-family:var(--font-mono); font-size:0.75rem;">Roll: 21-BSCS-042 | Pass: Numl@2026</span>
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span data-lucide="sparkles" style="color:var(--accent-gold);"></span>
+            <strong>Class Demo Account:</strong>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-main);">Roll: 21-BSCS-042 | Pass: Numl@2026</span>
         </div>
-        <button type="button" class="btn btn-sm btn-outline" id="auto-fill-btn" style="white-space: nowrap;">
-          ⚡ Auto Fill
+        <button type="button" class="btn btn-sm btn-outline" id="auto-fill-btn" style="white-space: nowrap; gap:0.35rem;">
+          <span data-lucide="sparkles"></span> Auto Fill
         </button>
       </div>
 
-      <!-- Login Form with Modern Web Guidance validation (:user-invalid) -->
+      <!-- Login Form with Gov.UK Error Summary & Modern Web Guidance validation (:user-invalid) -->
       <form id="login-form" novalidate>
         
+        <!-- Gov.UK Style Error Summary Banner Container -->
+        <div class="govuk-error-summary" id="login-error-summary" role="alert" tabindex="-1"></div>
+
         <!-- Roll Number Input (HCI: Error Prevention H5 & Clear Guidance H10) -->
         <div class="form-group" data-heuristic="H5" data-heuristic-label="H5: Error Prevention & Format Hint">
           <label class="form-label" for="login-roll">
             <span>Student Roll Number</span>
-            <span style="font-size: 0.72rem; color: var(--text-muted);">e.g. 21-BSCS-042</span>
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Format: 21-BSCS-042</span>
           </label>
           <span class="form-hint" id="roll-hint">Enter your official NUML registration ID</span>
           
           <div class="input-wrapper">
-            <span class="input-icon">🆔</span>
+            <span class="input-icon" data-lucide="idCard"></span>
             <input 
               type="text" 
               id="login-roll" 
@@ -66,7 +73,7 @@
             >
           </div>
           <div class="field-error-msg" id="roll-error">
-            <span>❌</span> Please enter a valid roll number format (e.g. 21-BSCS-042).
+            <span data-lucide="alertCircle"></span> Please enter a valid roll number format (e.g. 21-BSCS-042).
           </div>
         </div>
 
@@ -78,7 +85,7 @@
           </div>
 
           <div class="input-wrapper">
-            <span class="input-icon">🔒</span>
+            <span class="input-icon" data-lucide="lock"></span>
             <input 
               type="password" 
               id="login-password" 
@@ -88,16 +95,16 @@
               required 
               minlength="6"
               autocomplete="current-password"
-              aria-describedby="capslock-warning"
+              aria-describedby="capslock-warning password-rules-list"
             >
             <button type="button" class="input-action-btn password-toggle-btn" data-target="login-password" aria-label="Toggle password visibility">
-              👁️
+              <span data-lucide="eye"></span>
             </button>
           </div>
 
-          <!-- Caps Lock Alert (HCI: Error Prevention H5) -->
+          <!-- Caps Lock Alert (HCI: Error Prevention H5 & Diagnosis H9) -->
           <div class="capslock-alert" id="capslock-warning" data-heuristic="H9" data-heuristic-label="H9: CapsLock Error Detection">
-            <span>⚠️</span> Caps Lock is ON!
+            <span data-lucide="shieldAlert"></span> Caps Lock is ON!
           </div>
 
           <!-- Live Password Rules Checklist (HCI: Help Users Recognize & Recover H9) -->
@@ -124,7 +131,7 @@
 
         <!-- Submit Button (HCI: Efficiency of Use H7) -->
         <button type="submit" class="btn btn-primary btn-full btn-lg" id="submit-login-btn">
-          Sign In to Portal →
+          Sign In to Portal <span data-lucide="arrowRight"></span>
         </button>
       </form>
 
@@ -139,12 +146,14 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
+  <script src="js/icons.js"></script>
   <script src="js/app.js"></script>
   <script src="js/validation.js"></script>
+  <script src="js/command-palette.js"></script>
   <script src="js/hci-inspector.js"></script>
 
   <script>
-    // Login Screen Logic
+    // Login Screen Logic with Gov.UK Error Summary Pattern
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('login-form');
       const rollInput = document.getElementById('login-roll');
@@ -155,41 +164,61 @@
       autoFillBtn.addEventListener('click', () => {
         rollInput.value = '21-BSCS-042';
         passInput.value = 'Numl@2026';
-        // Trigger input event to update validation checklist
         passInput.dispatchEvent(new Event('input'));
         rollInput.dispatchEvent(new Event('input'));
+        GovUkErrorSummary.clear(form);
         
         ToastManager.show({
-          title: 'Demo Filled',
-          message: 'Student roll number and password filled. Click "Sign In" to proceed.',
+          title: 'Demo Credentials Filled',
+          message: 'Student roll number and password filled. Press "Sign In" to proceed.',
           type: 'success'
         });
       });
 
-      // Submit Handling
+      // Submit Handling adhering to Gov.UK Error Prevention & Guidance
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        const errors = [];
 
-        // Check validity
-        if (!rollInput.value.trim() || !passInput.value.trim()) {
-          ToastManager.show({
-            title: 'Missing Fields',
-            message: 'Please provide both your Roll Number and Password.',
-            type: 'warning'
+        if (!rollInput.value.trim()) {
+          errors.push({
+            fieldId: 'login-roll',
+            message: 'Enter your student roll number'
           });
-          return;
+        } else {
+          const rollRegex = /^[0-9]{2}-[A-Za-z]{4}-[0-9]{3}$/;
+          if (!rollRegex.test(rollInput.value.trim())) {
+            errors.push({
+              fieldId: 'login-roll',
+              message: 'Roll number must match the format 21-BSCS-042 (2 digits, 4 letters, 3 digits)'
+            });
+          }
         }
 
-        const rollRegex = /^[0-9]{2}-[A-Za-z]{4}-[0-9]{3}$/;
-        if (!rollRegex.test(rollInput.value.trim())) {
+        if (!passInput.value.trim()) {
+          errors.push({
+            fieldId: 'login-password',
+            message: 'Enter your portal password'
+          });
+        } else if (passInput.value.length < 6) {
+          errors.push({
+            fieldId: 'login-password',
+            message: 'Password must be at least 6 characters long'
+          });
+        }
+
+        if (errors.length > 0) {
+          GovUkErrorSummary.render(form, errors);
           ToastManager.show({
-            title: 'Invalid Roll Format',
-            message: 'Roll Number should follow the format: 21-BSCS-042',
+            title: 'Submission Incomplete',
+            message: 'Please resolve the errors highlighted in the summary box.',
             type: 'danger'
           });
-          rollInput.focus();
           return;
         }
+
+        // Clear error summary on success
+        GovUkErrorSummary.clear(form);
 
         // Successful authentication
         AppState.login(rollInput.value.trim());
@@ -201,7 +230,7 @@
 
         setTimeout(() => {
           window.location.href = 'dashboard.html';
-        }, 800);
+        }, 700);
       });
     });
   </script>

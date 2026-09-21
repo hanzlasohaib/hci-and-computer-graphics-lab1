@@ -6,6 +6,7 @@
   <title>Academic Transcript | National University of Modern Languages</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
+  <link rel="stylesheet" href="css/command-palette.css">
   <style>
     .gpa-pill {
       display: inline-flex;
@@ -49,20 +50,27 @@
       <!-- Navigation Links -->
       <nav class="portal-nav" aria-label="Portal main navigation">
         <a href="dashboard.html" class="nav-link">
-          <span>📊</span> Dashboard
+          <span data-lucide="layoutDashboard"></span> Dashboard
         </a>
         <a href="fee-stats.html" class="nav-link">
-          <span>💳</span> Fee Stats
+          <span data-lucide="creditCard"></span> Fee Stats
         </a>
         <a href="transcript.html" class="nav-link active">
-          <span>📜</span> Transcript
+          <span data-lucide="fileText"></span> Transcript
         </a>
       </nav>
 
       <!-- Right Header Actions -->
       <div class="header-actions">
+        <!-- Command Palette Trigger (pacocoursey/cmdk & shadcn/ui) -->
+        <button class="command-trigger-btn" aria-label="Search actions or press Ctrl+K" title="Search actions (Ctrl+K)">
+          <span data-lucide="search"></span>
+          <span>Search or jump to...</span>
+          <kbd class="cmdk-kbd">Ctrl K</kbd>
+        </button>
+
         <button class="icon-btn" id="theme-toggle-btn" aria-label="Toggle theme mode" title="Switch Light/Dark Mode">
-          <span id="theme-icon">🌙</span>
+          <span id="theme-icon" data-lucide="moon"></span>
         </button>
 
         <div class="user-profile-badge">
@@ -74,7 +82,7 @@
         </div>
 
         <button class="icon-btn btn-logout" aria-label="Sign Out" title="Sign Out of Portal">
-          <span>🚪</span>
+          <span data-lucide="logOut"></span>
         </button>
       </div>
     </div>
@@ -101,9 +109,12 @@
         </p>
       </div>
 
-      <div style="display: flex; gap: 0.75rem;">
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button class="btn btn-outline" id="export-transcript-csv-btn" title="Export Grades as CSV">
+          <span data-lucide="download"></span> Export CSV
+        </button>
         <button class="btn btn-outline" onclick="window.print()">
-          <span>🖨️</span> Print Official Transcript
+          <span data-lucide="printer"></span> Print Transcript
         </button>
       </div>
     </section>
@@ -132,7 +143,9 @@
         <div>
           <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Cumulative CGPA</span>
           <h3 style="font-size: 1.45rem; font-weight: 800; color: var(--primary);" id="main-cgpa-display">3.68 <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">/ 4.00</span></h3>
-          <span class="badge badge-success">Grade: A (Distinction)</span>
+          <span class="badge badge-success" style="gap:0.3rem;">
+            <span data-lucide="checkCircle" style="width:12px; height:12px;"></span> Grade: A (Distinction)
+          </span>
         </div>
       </div>
     </section>
@@ -142,7 +155,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
         <div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
-            <span style="font-size: 1.25rem;">✨</span>
+            <span data-lucide="sparkles" style="color: var(--accent-gold);"></span>
             <h3 style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--primary);">
               Interactive "What-If" GPA Calculator
             </h3>
@@ -154,12 +167,12 @@
         </div>
 
         <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="background: var(--bg-surface); padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: right;">
+          <div style="background: var(--bg-surface); padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: right;" role="status" aria-live="polite">
             <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Simulated CGPA</span>
             <div style="font-size: 1.35rem; font-weight: 800; color: var(--secondary);" id="simulated-cgpa-val">3.68</div>
           </div>
-          <button class="btn btn-sm btn-outline" id="reset-sim-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Revert">
-            🔄 Reset
+          <button class="btn btn-sm btn-outline" id="reset-sim-btn" data-heuristic="H3" data-heuristic-label="H3: User Freedom to Revert" style="gap:0.35rem;">
+            <span data-lucide="rotateCcw"></span> Reset
           </button>
         </div>
       </div>
@@ -231,7 +244,10 @@
             <label for="course-search-input" style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
               Search Course by Title or Code
             </label>
-            <input type="text" id="course-search-input" class="form-control" placeholder="e.g. CS-413 or Graphics..." style="padding: 0.45rem 0.85rem; font-size: 0.85rem;">
+            <div class="input-wrapper">
+              <span class="input-icon" data-lucide="search"></span>
+              <input type="text" id="course-search-input" class="form-control input-with-icon" placeholder="e.g. CS-413 or Graphics..." style="padding: 0.45rem 0.85rem 0.45rem 2.5rem; font-size: 0.85rem;">
+            </div>
           </div>
 
           <div>
@@ -250,11 +266,25 @@
       </div>
     </section>
 
+    <!-- Primer Blankslate Empty State -->
+    <div class="blankslate" id="transcript-blankslate">
+      <div class="blankslate-icon">
+        <span data-lucide="bookOpen" style="width: 36px; height: 36px;"></span>
+      </div>
+      <h3 class="blankslate-heading">No Courses Found</h3>
+      <p class="blankslate-text">
+        No courses match your search criteria. Try typing a different course code (e.g. CS-413) or select "All Semesters".
+      </p>
+      <button class="btn btn-sm btn-outline" onclick="document.getElementById('course-search-input').value=''; document.getElementById('filter-transcript-semester').value='all'; document.getElementById('course-search-input').dispatchEvent(new Event('input'));">
+        Clear Search & Filters
+      </button>
+    </div>
+
     <!-- Semester Course Grade Tables (HCI: Consistency H4 + Real World Match H2) -->
     <div id="transcript-tables-container">
       
       <!-- Semester 7 (Current Active Semester) -->
-      <section class="card semester-block" data-semester="7" style="margin-bottom: 1.5rem;">
+      <section class="card semester-block" data-semester="7" style="margin-bottom: 1.5rem;" id="cs413">
         <div class="card-header" style="background: var(--bg-subtle); padding: 0.75rem 1.25rem; border-radius: var(--radius-md) var(--radius-md) 0 0;">
           <div style="display: flex; align-items: center; gap: 0.65rem;">
             <span style="font-weight: 800; color: var(--primary);">7th Semester (Fall 2026)</span>
@@ -471,20 +501,25 @@
   <div id="toast-container"></div>
 
   <!-- Scripts -->
+  <script src="js/icons.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/command-palette.js"></script>
   <script src="js/hci-inspector.js"></script>
 
   <script>
-    // Transcript Search & Interactive GPA Simulator
+    // Transcript Search, CSV Export & Interactive GPA Simulator
     document.addEventListener('DOMContentLoaded', () => {
       const searchInput = document.getElementById('course-search-input');
       const semesterFilter = document.getElementById('filter-transcript-semester');
       const semesterBlocks = document.querySelectorAll('.semester-block');
+      const blankslate = document.getElementById('transcript-blankslate');
+      const tablesContainer = document.getElementById('transcript-tables-container');
 
       // Search and Filter Functionality
       function filterCourses() {
         const query = searchInput.value.toLowerCase().trim();
         const sem = semesterFilter.value;
+        let anyBlockVisible = false;
 
         semesterBlocks.forEach(block => {
           const blockSem = block.getAttribute('data-semester');
@@ -505,29 +540,72 @@
           });
 
           block.style.display = anyRowVisible ? '' : 'none';
+          if (anyRowVisible) anyBlockVisible = true;
         });
+
+        // Show/hide blankslate
+        if (!anyBlockVisible) {
+          blankslate.style.display = 'block';
+          tablesContainer.style.display = 'none';
+        } else {
+          blankslate.style.display = 'none';
+          tablesContainer.style.display = 'block';
+        }
       }
 
       searchInput.addEventListener('input', filterCourses);
       semesterFilter.addEventListener('change', filterCourses);
+
+      // Export Transcript to CSV (GitHub Primer pattern)
+      document.getElementById('export-transcript-csv-btn').addEventListener('click', () => {
+        const courses = [
+          ['Semester', 'Course Code', 'Course Title', 'Credit Hours', 'Grade', 'Grade Points'],
+          ['Semester 7', 'CS-413', 'Human-Computer Interaction & Computer Graphics', '3.0', 'A', '4.00'],
+          ['Semester 7', 'CS-415', 'Software Quality Engineering', '3.0', 'A-', '3.67'],
+          ['Semester 7', 'CS-418', 'Mobile Application Development', '3.0', 'A', '4.00'],
+          ['Semester 7', 'MG-301', 'Entrepreneurship & Tech Ventures', '3.0', 'B+', '3.33'],
+          ['Semester 7', 'CS-498', 'Final Year Project - I', '3.0', 'A', '4.00'],
+          ['Semester 6', 'CS-312', 'Artificial Intelligence', '3.0', 'A', '4.00'],
+          ['Semester 6', 'CS-314', 'Web Engineering', '3.0', 'A-', '3.67'],
+          ['Semester 6', 'CS-316', 'Computer Networks', '4.0', 'B+', '3.33'],
+          ['Semester 6', 'CS-318', 'Automata Theory & Computability', '3.0', 'B', '3.00'],
+          ['Semester 6', 'SS-201', 'Professional Ethics', '2.0', 'A', '4.00'],
+          ['Semester 5', 'CS-301', 'Database Systems', '4.0', 'A', '4.00'],
+          ['Semester 5', 'CS-303', 'Operating Systems', '4.0', 'A-', '3.67'],
+          ['Semester 5', 'CS-305', 'Design & Analysis of Algorithms', '3.0', 'B+', '3.33'],
+          ['Semester 5', 'MT-204', 'Linear Algebra', '3.0', 'A', '4.00']
+        ];
+
+        let csvContent = "data:text/csv;charset=utf-8," + courses.map(e => `"${e.join('","')}"`).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "NUML_Transcript_21-BSCS-042.csv");
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        ToastManager.show({
+          title: 'Transcript Exported',
+          message: 'Official academic transcript downloaded as CSV.',
+          type: 'success'
+        });
+      });
 
       // Interactive What-If GPA Calculator Logic
       const simSelects = document.querySelectorAll('.sim-grade-select');
       const simulatedCgpaVal = document.getElementById('simulated-cgpa-val');
       const resetSimBtn = document.getElementById('reset-sim-btn');
 
-      // Base: 93 completed credits before 7th sem with GPA 3.65
-      // Current 7th sem has 15 credits
       const previousCredits = 93;
-      const previousTotalPoints = 93 * 3.65; // ~339.45
+      const previousTotalPoints = 93 * 3.65;
 
       function recalculateSimulatedGpa() {
         let currentSemPoints = 0;
-        let currentSemCredits = 12; // 4 courses of 3 credits + 1 course of 3 credits = 15 credits
         
         simSelects.forEach(select => {
           const pts = parseFloat(select.value);
-          currentSemPoints += pts * 3.0; // 3 credit hours each
+          currentSemPoints += pts * 3.0;
         });
 
         const totalPoints = previousTotalPoints + currentSemPoints;
