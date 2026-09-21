@@ -5,18 +5,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard | National University of Modern Languages</title>
+  <meta name="description" content="NUML student dashboard — view GPA, attendance, today's schedule, announcements, and quick access to fee and transcript portals.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
   <link rel="stylesheet" href="css/command-palette.css">
+
+  <style>
+    /* Page-level: timeline progress label row */
+    .timeline-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+    .timeline-mid-label {
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    /* Launchpad buttons */
+    .launch-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.95rem 1rem;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      text-decoration: none;
+      color: var(--text-main);
+      transition: var(--transition);
+      width: 100%;
+    }
+    .launch-btn:hover {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: translateX(3px);
+      box-shadow: var(--shadow-sm);
+    }
+    [data-theme="dark"] .launch-btn:hover {
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.08);
+      border-color: #60a5fa;
+    }
+    .launch-btn-icon {
+      width: 40px; height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    [data-theme="dark"] .launch-btn-icon {
+      background: rgba(59, 130, 246, 0.12);
+      color: #93c5fd;
+    }
+    .launch-btn:hover .launch-btn-icon {
+      background: var(--primary);
+      color: #fff;
+    }
+    [data-theme="dark"] .launch-btn:hover .launch-btn-icon {
+      background: #60a5fa;
+      color: #0f172a;
+    }
+    .launch-btn-text-main { font-weight: 700; font-size: 0.875rem; }
+    .launch-btn-text-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.1rem; }
+    /* HCI Info note box */
+    .hci-note-box {
+      background: linear-gradient(135deg, rgba(217, 119, 6, 0.05), rgba(0, 40, 85, 0.04));
+      border: 1.5px solid rgba(217, 119, 6, 0.25);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+      margin-top: 0.5rem;
+    }
+    .hci-note-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+    .hci-note-strong {
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .hci-note-body {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    /* Announcement notice item */
+    .notice-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .notice-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .notice-icon-wrap {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .notice-icon-wrap.primary-icon { background: var(--primary-light); color: var(--primary); }
+    .notice-icon-wrap.success-icon { background: var(--success-bg); color: var(--success); }
+  </style>
 </head>
 
 <body>
 
   <!-- Global Header (HCI: Consistency & Standards H4) -->
-  <header class="portal-header" data-heuristic="H4" data-heuristic-label="H4: Consistent Header Across All Pages">
+  <header class="portal-header" data-heuristic="H4" data-heuristic-label="H4: Consistent Navigation Header Across All Pages">
     <div class="header-inner">
       <a href="dashboard.html" class="brand-wrapper">
-        <div class="numl-crest">NUML</div>
+        <div class="numl-crest">N</div>
         <div class="brand-text">
           <h1>National University of Modern Languages</h1>
           <p>Student Academic Portal • Islamabad</p>
@@ -36,10 +147,9 @@
         </a>
       </nav>
 
-      <!-- Right Header Actions (Command Palette Trigger, Theme, Profile, Logout) -->
+      <!-- Header Actions -->
       <div class="header-actions">
-        <!-- Command Palette Trigger (pacocoursey/cmdk & shadcn/ui) -->
-        <button class="command-trigger-btn" aria-label="Search actions or press Ctrl+K" title="Search actions (Ctrl+K)">
+        <button class="command-trigger-btn" aria-label="Open command palette (Ctrl+K)" title="Search actions (Ctrl+K)">
           <span data-lucide="search"></span>
           <span>Search or jump to...</span>
           <kbd class="cmdk-kbd">Ctrl K</kbd>
@@ -52,7 +162,7 @@
         <div class="user-profile-badge" title="Logged in as student">
           <div class="user-avatar">H</div>
           <div class="user-details">
-            <div class="user-name dynamic-student-name">Hanzla Khan</div>
+            <div class="user-name dynamic-student-name">Hanzla Sohaib</div>
             <div class="user-id dynamic-student-roll">21-BSCS-042</div>
           </div>
         </div>
@@ -64,12 +174,11 @@
     </div>
   </header>
 
-  <!-- Main Dashboard Content -->
+  <!-- Main Content -->
   <main class="main-content">
 
     <!-- Breadcrumbs (HCI: Recognition Rather Than Recall H6) -->
-    <nav class="breadcrumbs" aria-label="Breadcrumb" data-heuristic="H6"
-      data-heuristic-label="H6: Recognition via Breadcrumbs">
+    <nav class="breadcrumbs" aria-label="Breadcrumb" data-heuristic="H6" data-heuristic-label="H6: Breadcrumbs for Recognition Rather Than Recall">
       <a href="dashboard.html">Portal</a>
       <span class="divider">/</span>
       <span class="current">Student Dashboard</span>
@@ -82,82 +191,78 @@
           Hey, <span class="dynamic-student-name">Hanzla Sohaib</span>! 👋
         </h2>
         <p class="page-subtitle">
-          BS Computer Science (7th Semester) • Department of Computer Science • Fall 2026
+          BS Computer Science • 7th Semester • Department of Computer Science • Fall 2026
         </p>
       </div>
 
-      <div style="display: flex; gap: 0.75rem; align-items: center;">
-        <span class="badge badge-success" style="font-size: 0.85rem; padding: 0.4rem 0.85rem; gap: 0.4rem;">
-          <span data-lucide="checkCircle" style="width: 14px; height: 14px;"></span> Academic Status: Regular (Enrolled)
+      <div style="display: flex; gap: 0.6rem; align-items: center;">
+        <span class="badge badge-success" style="font-size: 0.82rem; padding: 0.38rem 0.9rem; gap: 0.4rem;">
+          <span data-lucide="checkCircle" style="width: 13px; height: 13px;"></span>
+          Academic Status: Regular (Enrolled)
         </span>
       </div>
     </section>
 
-    <!-- Visibility of System Status (HCI: H1 Progress & Milestones) -->
-    <section class="card"
-      style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 40, 85, 0.03) 0%, rgba(5, 150, 105, 0.05) 100%);"
-      data-heuristic="H1" data-heuristic-label="H1: Visibility of System Status (Timeline)">
-      <div
-        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+    <!-- ─── Semester Timeline (HCI: H1 Visibility of System Status) ─── -->
+    <section class="card" style="margin-bottom: 1.75rem;" data-heuristic="H1" data-heuristic-label="H1: Visibility of System Status — Semester Timeline">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
         <div>
-          <strong style="font-size: 0.95rem; color: var(--text-main);">Current Semester Timeline (Fall 2026)</strong>
-          <span style="font-size: 0.82rem; color: var(--text-muted); margin-left: 0.5rem;">Week 8 of 16 (Midterm
-            Examinations Phase)</span>
+          <strong style="font-size: 0.92rem;">Current Semester Timeline — Fall 2026</strong>
+          <span style="font-size: 0.8rem; color: var(--text-muted); margin-left: 0.65rem;">Week 8 of 16 &middot; Midterm Examinations Phase</span>
         </div>
         <span class="badge badge-info" style="gap: 0.35rem;">
-          <span data-lucide="clock" style="width: 13px; height: 13px;"></span> 50% Semester Completed
+          <span data-lucide="clock" style="width: 12px; height: 12px;"></span> 50% Semester Completed
         </span>
       </div>
 
-      <!-- Visual Progress Bar -->
-      <div style="height: 10px; background: var(--border-color); border-radius: var(--radius-full); overflow: hidden;">
-        <div
-          style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); border-radius: var(--radius-full);">
+      <!-- Progress Track -->
+      <div style="height: 11px; background: var(--bg-subtle); border-radius: var(--radius-full); overflow: hidden; border: 1px solid var(--border-color);">
+        <div style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%); border-radius: var(--radius-full); position: relative;">
+          <div style="position: absolute; right: -1px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; background: white; border: 2.5px solid var(--secondary); border-radius: 50%; box-shadow: 0 0 0 3px rgba(5,150,105,0.2);"></div>
         </div>
       </div>
 
-      <div
-        style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+      <div class="timeline-labels">
         <span>Session Start: Aug 15</span>
-        <span style="font-weight: 700; color: var(--accent-gold); display: flex; align-items: center; gap: 0.3rem;">
-          <span data-lucide="sparkles" style="width: 13px; height: 13px;"></span> Current: Midterm Week
+        <span class="timeline-mid-label">
+          <span data-lucide="sparkles" style="width: 12px; height: 12px;"></span> ← Current: Midterm Week
         </span>
         <span>Final Exams: Jan 10</span>
       </div>
     </section>
 
-    <!-- Key Stats Grid (HCI: Aesthetic & Minimalist H8 + Recognition H6) -->
-    <section class="stats-grid">
-      <!-- CGPA Card -->
-      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Instant Academic Metric">
+    <!-- ─── Key Stats Grid (HCI: H8 Aesthetic & Minimalist + H1 Instant Status) ─── -->
+    <section class="stats-grid" data-heuristic="H8" data-heuristic-label="H8: Aesthetic & Minimalist — Key Metrics at a Glance">
+
+      <!-- CGPA -->
+      <div class="stat-card">
         <div class="stat-info">
           <p class="stat-label">Cumulative GPA</p>
           <h3 class="stat-value dynamic-student-cgpa">3.68</h3>
-          <span class="stat-desc">Target: 3.75+ for Dean's Honor</span>
+          <span class="stat-desc">Target: 3.75+ for Dean's Honor Roll</span>
         </div>
         <div class="stat-icon primary">
           <span data-lucide="graduationCap"></span>
         </div>
       </div>
 
-      <!-- Attendance Card -->
-      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Real-time Attendance Status">
+      <!-- Attendance -->
+      <div class="stat-card green-accent">
         <div class="stat-info">
           <p class="stat-label">Overall Attendance</p>
           <h3 class="stat-value" style="color: var(--secondary);">88%</h3>
-          <span class="stat-desc">✓ Eligible for Midterm Exams (>75%)</span>
+          <span class="stat-desc">✓ Eligible for Midterm Exams (&gt;75%)</span>
         </div>
         <div class="stat-icon secondary">
           <span data-lucide="checkCircle"></span>
         </div>
       </div>
 
-      <!-- Credits Card -->
-      <div class="stat-card" data-heuristic="H2" data-heuristic-label="H2: Real-World Credit System">
+      <!-- Credits -->
+      <div class="stat-card gold-accent">
         <div class="stat-info">
           <p class="stat-label">Degree Credits</p>
-          <h3 class="stat-value">108 <span style="font-size: 1.1rem; color: var(--text-muted); font-weight: 500;">/
-              134</span></h3>
+          <h3 class="stat-value">108 <span style="font-size: 1.05rem; color: var(--text-muted); font-weight: 500;">/ 134</span></h3>
           <span class="stat-desc">26 Credits remaining for graduation</span>
         </div>
         <div class="stat-icon warning">
@@ -165,12 +270,12 @@
         </div>
       </div>
 
-      <!-- Fee Status Card -->
-      <div class="stat-card" data-heuristic="H1" data-heuristic-label="H1: Clear Financial Status">
+      <!-- Fee Status -->
+      <div class="stat-card green-accent">
         <div class="stat-info">
           <p class="stat-label">Fee Status</p>
-          <h3 class="stat-value" style="color: var(--success); font-size: 1.5rem;">PKR 0</h3>
-          <span class="stat-desc">✓ Fall 2026 Dues Cleared</span>
+          <h3 class="stat-value" style="color: var(--success); font-size: 1.75rem;">PKR 0</h3>
+          <span class="stat-desc">✓ Fall 2026 Dues Fully Cleared</span>
         </div>
         <div class="stat-icon secondary">
           <span data-lucide="creditCard"></span>
@@ -178,112 +283,108 @@
       </div>
     </section>
 
-    <!-- 2 Column Layout: Today's Schedule & Quick Action Launchpad -->
-    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- ─── Two-column: Schedule + Launchpad ─── -->
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem;">
 
-      <!-- Today's Schedule (HCI: Real-World Match H2 & Prominence of Core Course) -->
-      <div class="card" data-heuristic="H2" data-heuristic-label="H2: Authentic NUML Class Schedule">
+      <!-- Today's Schedule (HCI: H2 Real-World Match & H7 Contextual Info) -->
+      <div class="card" data-heuristic="H2" data-heuristic-label="H2: Authentic Real-World NUML Class Schedule">
         <div class="card-header">
           <h3 class="card-title">
-            <span data-lucide="clock"></span> Today's Classes & Labs
+            <span data-lucide="clock"></span> Today's Classes &amp; Labs
           </h3>
-          <span style="font-size: 0.8rem; color: var(--text-muted);">Monday • Week 8</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted);">Monday &bull; Week 8</span>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; flex-direction: column; gap: 0.85rem;">
 
-          <!-- HCI & Computer Graphics (Primary Highlight) -->
-          <div
-            style="background: var(--bg-subtle); border-left: 4px solid var(--primary); padding: 1rem; border-radius: var(--radius-md);"
-            data-heuristic="H7" data-heuristic-label="H7: Direct Contextual Information">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
+          <!-- HCI & CG — Primary Highlighted -->
+          <div class="class-item highlight" data-heuristic="H7" data-heuristic-label="H7: Contextually Prominent Core Subject (CS-413)">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.45rem;">
               <div>
-                <span class="badge badge-info" style="margin-bottom: 0.35rem;">CS-413 (Lab + Theory)</span>
-                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main);">
-                  Human-Computer Interaction & Computer Graphics
+                <span class="badge badge-info" style="margin-bottom: 0.35rem;">CS-413 &mdash; Lab + Theory</span>
+                <h4 style="font-size: 1rem; font-weight: 700; color: var(--text-main); line-height: 1.3;">
+                  Human-Computer Interaction &amp; Computer Graphics
                 </h4>
               </div>
-              <span class="badge badge-success" style="gap: 0.3rem;">
-                <span data-lucide="checkCircle" style="width: 12px; height: 12px;"></span> Next Up
+              <span class="badge badge-success" style="gap: 0.3rem; flex-shrink: 0;">
+                <span data-lucide="zap" style="width: 11px; height: 11px;"></span> Next Up
               </span>
             </div>
-
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.65rem;">
-              Instructor: Engr. / Department of Computer Science • Topic: Usability Heuristic Evaluation &
-              Transformation Pipeline
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.6rem; line-height: 1.45;">
+              Dept. of Computer Science &bull; <em>Topic:</em> Usability Heuristic Evaluation &amp; Transformation Pipeline
             </p>
-
-            <div style="display: flex; gap: 1.25rem; font-size: 0.8rem; color: var(--text-main); font-weight: 600;">
+            <div style="display: flex; gap: 1.25rem; font-size: 0.78rem; font-weight: 600; color: var(--text-main);">
               <span>📍 CS Lab 3 (Ground Floor)</span>
-              <span>⏰ 11:00 AM - 01:00 PM</span>
+              <span>⏰ 11:00 AM – 01:00 PM</span>
             </div>
           </div>
 
           <!-- Software Quality Engineering -->
-          <div
-            style="background: var(--bg-subtle); border-left: 4px solid #64748b; padding: 1rem; border-radius: var(--radius-md);">
+          <div class="class-item">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.4rem;">
               <div>
-                <span class="badge" style="background: #e2e8f0; color: #475569; margin-bottom: 0.35rem;">CS-415</span>
-                <h4 style="font-size: 1.02rem; font-weight: 700; color: var(--text-main);">
+                <span class="badge badge-neutral" style="margin-bottom: 0.35rem;">CS-415</span>
+                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main);">
                   Software Quality Engineering
                 </h4>
               </div>
-              <span class="badge badge-info">2:00 PM</span>
+              <span class="badge badge-info" style="flex-shrink: 0;">2:00 PM</span>
             </div>
-
-            <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.65rem;">
-              Class Room CS-12 • Verification, Testing Metrics & Code Coverage
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.55rem;">
+              Room CS-12 &bull; Verification, Testing Metrics &amp; Code Coverage
             </p>
-
-            <div style="display: flex; gap: 1.25rem; font-size: 0.8rem; color: var(--text-muted);">
+            <div style="display: flex; gap: 1.25rem; font-size: 0.78rem; color: var(--text-muted);">
               <span>📍 Room CS-12</span>
-              <span>⏰ 02:00 PM - 03:30 PM</span>
+              <span>⏰ 02:00 PM – 03:30 PM</span>
             </div>
           </div>
 
         </div>
       </div>
 
-      <!-- Quick Action Launchpad (HCI: Flexibility & Efficiency of Use H7) -->
-      <div class="card" data-heuristic="H7" data-heuristic-label="H7: Flexibility & Fast Navigation Shortcuts">
+      <!-- Quick Launchpad (HCI: H7 Flexibility & Efficiency of Use) -->
+      <div class="card" data-heuristic="H7" data-heuristic-label="H7: Flexibility & Efficiency — Quick Navigation Shortcuts">
         <div class="card-header">
           <h3 class="card-title">
             <span data-lucide="sparkles"></span> Quick Launchpad
           </h3>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">Direct Portals</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted);">Direct access</span>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-          <a href="fee-stats.html" class="btn btn-outline" style="justify-content: flex-start; padding: 0.9rem 1rem;">
-            <span data-lucide="creditCard" style="width: 22px; height: 22px; color: var(--primary);"></span>
-            <div style="text-align: left; margin-left: 0.5rem;">
-              <div style="font-weight: 700; font-size: 0.9rem;">Fee Stats & Online Challan</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Pay dues, download challans, payment history
-              </div>
+        <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+
+          <a href="fee-stats.html" class="launch-btn">
+            <div class="launch-btn-icon">
+              <span data-lucide="creditCard" style="width: 20px; height: 20px;"></span>
+            </div>
+            <div>
+              <div class="launch-btn-text-main">Fee Stats &amp; Challan</div>
+              <div class="launch-btn-text-sub">Pay dues, download challans, payment history</div>
             </div>
           </a>
 
-          <a href="transcript.html" class="btn btn-outline" style="justify-content: flex-start; padding: 0.9rem 1rem;">
-            <span data-lucide="fileText" style="width: 22px; height: 22px; color: var(--primary);"></span>
-            <div style="text-align: left; margin-left: 0.5rem;">
-              <div style="font-weight: 700; font-size: 0.9rem;">Academic Transcript & GPA Simulator</div>
-              <div style="font-size: 0.75rem; color: var(--text-muted);">Semester grades, credit breakdown, what-if calc
-              </div>
+          <a href="transcript.html" class="launch-btn">
+            <div class="launch-btn-icon">
+              <span data-lucide="fileText" style="width: 20px; height: 20px;"></span>
+            </div>
+            <div>
+              <div class="launch-btn-text-main">Transcript &amp; GPA Simulator</div>
+              <div class="launch-btn-text-sub">Semester grades, credit breakdown, what-if calc</div>
             </div>
           </a>
 
-          <div
-            style="background: var(--bg-subtle); padding: 1rem; border-radius: var(--radius-md); margin-top: 0.5rem;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-              <strong style="font-size: 0.85rem; display: flex; align-items: center; gap: 0.35rem;">
-                <span data-lucide="graduationCap"></span> HCI Lab Project Note
+          <!-- HCI Lab Note -->
+          <div class="hci-note-box">
+            <div class="hci-note-title">
+              <strong class="hci-note-strong">
+                <span data-lucide="graduationCap" style="width: 15px; height: 15px;"></span>
+                HCI Lab Project Note
               </strong>
-              <span class="badge badge-warning">Class of HCI</span>
+              <span class="badge badge-warning">CS-413</span>
             </div>
-            <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.5;">
-              Press <kbd class="cmdk-kbd">Ctrl K</kbd> to open the global Command Palette, or use the top-right
-              <strong>"HCI Evaluation Inspector"</strong> to inspect all Jakob Nielsen Usability Heuristics.
+            <p class="hci-note-body">
+              Press <kbd class="cmdk-kbd" style="font-size: 0.68rem; padding: 0.1rem 0.35rem;">Ctrl K</kbd> for the Command Palette, or click the top-right
+              <strong style="color: var(--text-main);">"HCI Inspector"</strong> button to overlay all 10 Nielsen Heuristics.
             </p>
           </div>
         </div>
@@ -291,41 +392,44 @@
 
     </div>
 
-    <!-- Official NUML Academic Announcements (HCI: Help & Recognition H10) -->
-    <section class="card" data-heuristic="H10" data-heuristic-label="H10: Announcements & Timely Help">
+    <!-- ─── Official NUML Announcements (HCI: H10 Help & Documentation) ─── -->
+    <section class="card" data-heuristic="H10" data-heuristic-label="H10: Help & Timely Academic Announcements">
       <div class="card-header">
         <h3 class="card-title">
           <span data-lucide="bell"></span> Official NUML Academic Notices
         </h3>
-        <span style="font-size: 0.8rem; color: var(--text-muted);">Campus Updates</span>
+        <span style="font-size: 0.78rem; color: var(--text-muted);">Campus Updates &bull; Fall 2026</span>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 0.85rem;">
-        <div
-          style="display: flex; align-items: flex-start; gap: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-color);">
-          <span data-lucide="fileText" style="color: var(--primary); margin-top: 0.2rem;"></span>
-          <div>
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <strong style="font-size: 0.88rem;">CS-413: HCI & Computer Graphics Midterm Lab Evaluation</strong>
+      <div>
+        <!-- Notice 1 -->
+        <div class="notice-item">
+          <div class="notice-icon-wrap primary-icon">
+            <span data-lucide="fileText" style="width: 18px; height: 18px;"></span>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.3rem;">
+              <strong style="font-size: 0.875rem;">CS-413: HCI &amp; Computer Graphics — Midterm Lab Evaluation</strong>
               <span class="badge badge-danger">Important</span>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
-              Students must prepare their heuristic evaluation of designs covering Learnability, Usability, and Error
-              Prevention. Lab presentations commence this week.
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+              Students must prepare their heuristic evaluation of designs covering Learnability, Usability, and Error Prevention. Lab presentations commence this week.
             </p>
           </div>
         </div>
 
-        <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
-          <span data-lucide="checkCircle" style="color: var(--secondary); margin-top: 0.2rem;"></span>
-          <div>
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <strong style="font-size: 0.88rem;">Fall 2026 Examination Fee Clearance</strong>
+        <!-- Notice 2 -->
+        <div class="notice-item">
+          <div class="notice-icon-wrap success-icon">
+            <span data-lucide="checkCircle" style="width: 18px; height: 18px;"></span>
+          </div>
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.3rem;">
+              <strong style="font-size: 0.875rem;">Fall 2026 Examination Fee Clearance</strong>
               <span class="badge badge-success">All Clear</span>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">
-              All registered 7th-semester Computer Science students have successfully cleared tuition dues. Roll number
-              slips can be printed from the Fee Stats portal.
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+              All 7th-semester Computer Science students have successfully cleared tuition dues. Roll number slips can be printed from the Fee Stats portal.
             </p>
           </div>
         </div>
@@ -338,10 +442,10 @@
   <footer class="portal-footer">
     <div class="footer-inner">
       <div>
-        <strong>National University of Modern Languages (NUML)</strong> • H-9, Islamabad, Pakistan
+        <strong>National University of Modern Languages (NUML)</strong> &bull; H-9, Islamabad, Pakistan
       </div>
       <div>
-        Subject: Human-Computer Interaction & Computer Graphics • Lab Project
+        Human-Computer Interaction &amp; Computer Graphics &bull; CS-413 Lab Project
       </div>
     </div>
   </footer>
@@ -353,6 +457,7 @@
   <script src="js/app.js"></script>
   <script src="js/command-palette.js"></script>
   <script src="js/hci-inspector.js"></script>
+
 </body>
 
 </html>

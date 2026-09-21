@@ -5,7 +5,7 @@
 
 // Initialize Demo Student Data
 const DEFAULT_STUDENT = {
-  name: "Hanzla Khan",
+  name: "Hanzla Sohaib",
   rollNo: "21-BSCS-042",
   department: "Department of Computer Science",
   degree: "BS Computer Science (BSCS)",

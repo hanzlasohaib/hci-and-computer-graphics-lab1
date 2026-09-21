@@ -1,98 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Portal Login | National University of Modern Languages</title>
+  <title>Student Sign In | NUML Student Academic Portal</title>
+  <meta name="description" content="Sign in to the National University of Modern Languages student academic portal to access your timetable, fee challans, and transcripts.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/hci-inspector.css">
   <link rel="stylesheet" href="css/command-palette.css">
 </head>
+
 <body class="login-page-body">
 
-  <div class="login-card-container">
-    
-    <!-- Branding Header (HCI: Aesthetic & Minimalist + Real-World Match H2) -->
-    <div class="login-brand-header" data-heuristic="H2" data-heuristic-label="H2: Real-World NUML Identity">
-      <div class="login-brand-logo">NUML</div>
-      <h1 style="font-family: var(--font-display); font-size: 1.5rem; color: var(--primary); font-weight: 800;">
-        National University of Modern Languages
-      </h1>
-      <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
-        Islamabad Campus • Official Student Academic Portal
-      </p>
-    </div>
+  <!-- ═══════════════════════════════════════════════════════
+       LEFT: Hero / Brand Panel
+       HCI H2 Real-World Match | H8 Aesthetic & Minimalist
+  ════════════════════════════════════════════════════════════ -->
+  <aside class="login-hero-panel" aria-hidden="true">
+    <div class="login-hero-content">
 
-    <!-- Login Card (shadcn/ui inspired card elevation) -->
-    <main class="login-card" data-heuristic="H8" data-heuristic-label="H8: Minimalist & Clean Card">
-      <div style="margin-bottom: 1.5rem;">
-        <h2 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;">Student Sign In</h2>
-        <p style="font-size: 0.82rem; color: var(--text-muted);">Access your timetable, fee challans, and academic transcripts</p>
+      <!-- NUML Badge -->
+      <div class="login-hero-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        Islamabad, Pakistan
+      </div>
+
+      <!-- Crest -->
+      <div class="login-hero-crest">N</div>
+
+      <!-- Title -->
+      <h1 class="login-hero-title">National University<br>of Modern Languages</h1>
+      <p class="login-hero-sub">
+        Official Student Academic Portal. Access your academic records, fee challans, timetable, and transcripts — all in one place.
+      </p>
+
+      <!-- Feature List -->
+      <div class="login-feature-pills">
+        <div class="login-feature-pill">
+          <div class="login-feature-pill-dot">📊</div>
+          <span>Real-time GPA & attendance tracking</span>
+        </div>
+        <div class="login-feature-pill">
+          <div class="login-feature-pill-dot">💳</div>
+          <span>Fee challan generation & payment history</span>
+        </div>
+        <div class="login-feature-pill">
+          <div class="login-feature-pill-dot">📋</div>
+          <span>Semester-wise academic transcript</span>
+        </div>
+        <div class="login-feature-pill">
+          <div class="login-feature-pill-dot">🎓</div>
+          <span>HCI Heuristic Evaluation Inspector (CS-413)</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════
+       RIGHT: Login Form Panel
+  ════════════════════════════════════════════════════════════ -->
+  <div class="login-form-panel">
+    <div class="login-form-inner">
+
+      <!-- Header -->
+      <div class="login-form-header" data-heuristic="H2" data-heuristic-label="H2: Real-World NUML Identity">
+        <span class="login-form-tag">Student Portal</span>
+        <h2 class="login-form-title">Welcome back 👋</h2>
+        <p class="login-form-sub">Sign in with your NUML registration ID and portal password to continue.</p>
       </div>
 
       <!-- Demo Credentials Quick-Fill (HCI: Recognition Rather Than Recall H6 + Learnability) -->
-      <div class="demo-credentials-box" data-heuristic="H6" data-heuristic-label="H6: Recognition over Recall">
+      <div class="demo-credentials-box" data-heuristic="H6" data-heuristic-label="H6: Recognition over Recall — Demo Account">
         <div class="demo-text">
-          <div style="display:flex; align-items:center; gap:0.4rem;">
-            <span data-lucide="sparkles" style="color:var(--accent-gold);"></span>
-            <strong>Class Demo Account:</strong>
+          <div style="display:flex; align-items:center; gap:0.4rem; margin-bottom:0.2rem;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <strong style="color: var(--text-main); font-size: 0.8rem;">Lab Demo Account</strong>
           </div>
-          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-main);">Roll: 21-BSCS-042 | Pass: Numl@2026</span>
+          <span style="font-family:var(--font-mono); font-size:0.73rem; color:var(--text-muted);">Roll: 21-BSCS-042 &nbsp;|&nbsp; Pass: Numl@2026</span>
         </div>
-        <button type="button" class="btn btn-sm btn-outline" id="auto-fill-btn" style="white-space: nowrap; gap:0.35rem;">
-          <span data-lucide="sparkles"></span> Auto Fill
+        <button type="button" class="btn btn-sm btn-secondary" id="auto-fill-btn" style="gap:0.35rem; flex-shrink:0;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Auto Fill
         </button>
       </div>
 
-      <!-- Login Form with Gov.UK Error Summary & Modern Web Guidance validation (:user-invalid) -->
+      <!-- Login Form with Gov.UK Error Summary & Modern Web Guidance validation -->
       <form id="login-form" novalidate>
-        
-        <!-- Gov.UK Style Error Summary Banner Container -->
+
+        <!-- Gov.UK Style Error Summary Banner -->
         <div class="govuk-error-summary" id="login-error-summary" role="alert" tabindex="-1"></div>
 
         <!-- Roll Number Input (HCI: Error Prevention H5 & Clear Guidance H10) -->
-        <div class="form-group" data-heuristic="H5" data-heuristic-label="H5: Error Prevention & Format Hint">
+        <div class="form-group" data-heuristic="H5" data-heuristic-label="H5: Error Prevention & Roll Number Format Hint">
           <label class="form-label" for="login-roll">
             <span>Student Roll Number</span>
-            <span style="font-size: 0.72rem; color: var(--text-muted);">Format: 21-BSCS-042</span>
+            <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 500; font-family: var(--font-mono);">Format: 21-BSCS-042</span>
           </label>
           <span class="form-hint" id="roll-hint">Enter your official NUML registration ID</span>
-          
+
           <div class="input-wrapper">
             <span class="input-icon" data-lucide="idCard"></span>
-            <input 
-              type="text" 
-              id="login-roll" 
-              name="roll" 
-              class="form-control input-with-icon" 
-              placeholder="21-BSCS-042" 
-              required 
+            <input
+              type="text"
+              id="login-roll"
+              name="roll"
+              class="form-control input-with-icon"
+              placeholder="21-BSCS-042"
+              required
               pattern="^[0-9]{2}-[A-Za-z]{4}-[0-9]{3}$"
               autocomplete="username"
               aria-describedby="roll-hint roll-error"
+              spellcheck="false"
+              autocorrect="off"
+              autocapitalize="characters"
             >
           </div>
           <div class="field-error-msg" id="roll-error">
-            <span data-lucide="alertCircle"></span> Please enter a valid roll number format (e.g. 21-BSCS-042).
+            <span data-lucide="alertCircle"></span> Please use the format: 21-BSCS-042
           </div>
         </div>
 
         <!-- Password Input (HCI: Error Prevention H5 + Visibility Peek H6) -->
-        <div class="form-group" data-heuristic="H6" data-heuristic-label="H6: Password Visibility Peek">
+        <div class="form-group" data-heuristic="H6" data-heuristic-label="H6: Password Visibility Peek for Learnability">
           <div class="form-label">
             <label for="login-password">Portal Password</label>
-            <a href="#" style="font-size: 0.75rem; color: var(--primary); text-decoration: none;">Forgot?</a>
+            <a href="#" style="font-size: 0.75rem; color: var(--primary); text-decoration: none; font-weight: 600;" tabindex="-1">Forgot?</a>
           </div>
 
           <div class="input-wrapper">
             <span class="input-icon" data-lucide="lock"></span>
-            <input 
-              type="password" 
-              id="login-password" 
-              name="password" 
-              class="form-control input-with-icon" 
-              placeholder="Enter your password" 
-              required 
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              class="form-control input-with-icon"
+              placeholder="Enter your password"
+              required
               minlength="6"
               autocomplete="current-password"
               aria-describedby="capslock-warning password-rules-list"
@@ -103,8 +147,8 @@
           </div>
 
           <!-- Caps Lock Alert (HCI: Error Prevention H5 & Diagnosis H9) -->
-          <div class="capslock-alert" id="capslock-warning" data-heuristic="H9" data-heuristic-label="H9: CapsLock Error Detection">
-            <span data-lucide="shieldAlert"></span> Caps Lock is ON!
+          <div class="capslock-alert" id="capslock-warning" data-heuristic="H9" data-heuristic-label="H9: CapsLock Error Detection & Recovery">
+            <span data-lucide="shieldAlert"></span> Caps Lock is ON — check your password
           </div>
 
           <!-- Live Password Rules Checklist (HCI: Help Users Recognize & Recover H9) -->
@@ -122,25 +166,32 @@
         </div>
 
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.82rem;">
-          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-            <input type="checkbox" id="remember-me" checked>
+          <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; color: var(--text-muted);">
+            <input type="checkbox" id="remember-me" checked style="accent-color: var(--primary);">
             <span>Remember Roll No.</span>
           </label>
-          <a href="#" style="color: var(--text-muted); text-decoration: none;">Need Help?</a>
+          <a href="#" style="color: var(--text-muted); text-decoration: none; font-weight: 500;">Need Help?</a>
         </div>
 
         <!-- Submit Button (HCI: Efficiency of Use H7) -->
-        <button type="submit" class="btn btn-primary btn-full btn-lg" id="submit-login-btn">
-          Sign In to Portal <span data-lucide="arrowRight"></span>
+        <button type="submit" class="btn btn-primary btn-full btn-lg" id="submit-login-btn" data-heuristic="H7" data-heuristic-label="H7: Clear, Single Primary Action">
+          <span data-lucide="logIn"></span>
+          Sign In to Portal
+          <span data-lucide="arrowRight"></span>
         </button>
       </form>
 
-      <div style="margin-top: 1.5rem; text-align: center; font-size: 0.78rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 1rem;">
-        Having trouble signing in? Contact NUML IT Helpdesk: <br>
-        <span style="font-weight: 600; color: var(--primary);">helpdesk@numl.edu.pk</span> | Ext: 2411
+      <!-- Footer note -->
+      <div style="margin-top: 1.75rem; text-align: center; font-size: 0.76rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 1rem; line-height: 1.6;">
+        Having trouble? Contact NUML IT Helpdesk:<br>
+        <span style="font-weight: 600; color: var(--primary);">helpdesk@numl.edu.pk</span> &nbsp;|&nbsp; Ext: 2411
       </div>
-    </main>
 
+      <!-- HCI Note -->
+      <div style="margin-top: 1rem; text-align: center; font-size: 0.72rem; color: var(--text-muted);">
+        <span style="opacity: 0.6;">HCI &amp; Computer Graphics • CS-413 Lab Project • NUML Islamabad</span>
+      </div>
+    </div>
   </div>
 
   <div id="toast-container"></div>
@@ -153,12 +204,18 @@
   <script src="js/hci-inspector.js"></script>
 
   <script>
-    // Login Screen Logic with Gov.UK Error Summary Pattern
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('login-form');
       const rollInput = document.getElementById('login-roll');
       const passInput = document.getElementById('login-password');
       const autoFillBtn = document.getElementById('auto-fill-btn');
+
+      // Auto-format roll number to uppercase
+      rollInput.addEventListener('input', () => {
+        const start = rollInput.selectionStart;
+        rollInput.value = rollInput.value.toUpperCase();
+        rollInput.setSelectionRange(start, start);
+      });
 
       // Auto Fill Demo Credentials
       autoFillBtn.addEventListener('click', () => {
@@ -167,72 +224,60 @@
         passInput.dispatchEvent(new Event('input'));
         rollInput.dispatchEvent(new Event('input'));
         GovUkErrorSummary.clear(form);
-        
+
         ToastManager.show({
           title: 'Demo Credentials Filled',
-          message: 'Student roll number and password filled. Press "Sign In" to proceed.',
+          message: 'Press "Sign In to Portal" to proceed.',
           type: 'success'
         });
       });
 
-      // Submit Handling adhering to Gov.UK Error Prevention & Guidance
+      // Submit Handling
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const errors = [];
 
         if (!rollInput.value.trim()) {
-          errors.push({
-            fieldId: 'login-roll',
-            message: 'Enter your student roll number'
-          });
+          errors.push({ fieldId: 'login-roll', message: 'Enter your student roll number' });
         } else {
           const rollRegex = /^[0-9]{2}-[A-Za-z]{4}-[0-9]{3}$/;
           if (!rollRegex.test(rollInput.value.trim())) {
-            errors.push({
-              fieldId: 'login-roll',
-              message: 'Roll number must match the format 21-BSCS-042 (2 digits, 4 letters, 3 digits)'
-            });
+            errors.push({ fieldId: 'login-roll', message: 'Roll number must match: 21-BSCS-042' });
           }
         }
 
         if (!passInput.value.trim()) {
-          errors.push({
-            fieldId: 'login-password',
-            message: 'Enter your portal password'
-          });
+          errors.push({ fieldId: 'login-password', message: 'Enter your portal password' });
         } else if (passInput.value.length < 6) {
-          errors.push({
-            fieldId: 'login-password',
-            message: 'Password must be at least 6 characters long'
-          });
+          errors.push({ fieldId: 'login-password', message: 'Password must be at least 6 characters' });
         }
 
         if (errors.length > 0) {
           GovUkErrorSummary.render(form, errors);
           ToastManager.show({
             title: 'Submission Incomplete',
-            message: 'Please resolve the errors highlighted in the summary box.',
+            message: 'Please resolve the highlighted errors.',
             type: 'danger'
           });
           return;
         }
 
-        // Clear error summary on success
         GovUkErrorSummary.clear(form);
+        const btn = document.getElementById('submit-login-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span style="display:inline-block;animation:spin 0.7s linear infinite;border:2px solid #fff;border-top-color:transparent;width:16px;height:16px;border-radius:50%"></span> Signing In...';
 
-        // Successful authentication
         AppState.login(rollInput.value.trim());
-        ToastManager.show({
-          title: 'Sign In Successful',
-          message: 'Redirecting to your student dashboard...',
-          type: 'success'
-        });
+        ToastManager.show({ title: 'Sign In Successful', message: 'Redirecting to your dashboard…', type: 'success' });
 
-        setTimeout(() => {
-          window.location.href = 'dashboard.html';
-        }, 700);
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 800);
       });
     });
   </script>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
 </body>
 </html>
