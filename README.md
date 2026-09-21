@@ -1,4 +1,4 @@
-# NUML Student Academic Portal - HCI & Computer Graphics (CS-413)
+# NUML Student Academic Portal - HCI & Computer Graphics
 
 A high-fidelity web application prototype developed for the **National University of Modern Languages (NUML)**, Islamabad. This project fulfills the midterm lab assignment for **Human-Computer Interaction (HCI) & Computer Graphics**, focusing on:
 
